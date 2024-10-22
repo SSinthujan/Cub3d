@@ -1,0 +1,8 @@
+1. accepter en argument une map qui se termine par .cub 
+
+2. map: 
+	- caracteres accepter : 0 = espace vide;
+							1 = mur;
+							N,S,E,W = position de depart + orientation;
+	- map fermer par les murs 
+	- remplacer/supprimer les espaces/lignes vide dans la map par des 0
