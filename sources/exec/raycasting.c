@@ -150,7 +150,7 @@ void	perform_raycasting(t_data *data)
 		int y = 0;
 		while (y < draw_start)
 		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0xADD8E6);  // Couleur pour le plafond (bleu clair)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x1b4f08);  // Couleur pour le plafond (bleu clair)
 			y++;
 		}
 		// mur avec couleur verte
@@ -160,7 +160,7 @@ void	perform_raycasting(t_data *data)
 		y = draw_end;
 		while (y < WIN_HEIGHT)
 		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x8B4513);  // Couleur pour le sol (marron)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x096a09);  // Couleur pour le sol (marron)
 			y++;
 		}
 		x += 1;
