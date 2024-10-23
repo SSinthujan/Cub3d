@@ -65,6 +65,7 @@ void	perform_raycasting(t_data *data)
 	int		line_height;
 	int		draw_start;
 	int		draw_end;
+	t_texture	*current_texture;
 
 	x = 0;
 	while (x < WIN_WIDTH)
