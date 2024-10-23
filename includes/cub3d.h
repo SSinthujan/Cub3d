@@ -17,20 +17,20 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-typedef struct s_player
-{
-    double x;
-    double y;
-    double dirX;
-    double dirY;
-} t_player;
+typedef struct s_player {
+    double      x;
+    double      y;
+    double      dirX;
+    double      dirY;
+    double      planeX; // fov du joueur
+    double      planeY;
+}   t_player;
 
-typedef struct s_data
-{
-    void *mlx_ptr;
-    void *win_ptr;
-    t_player player;
-} t_data;
+typedef struct s_data {
+    void        *mlx_ptr;
+    void        *win_ptr;
+    t_player    player;
+}   t_data;
 
 void init_game(t_data *data);
 int close_window(t_data *data);
