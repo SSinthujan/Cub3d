@@ -19,6 +19,8 @@
 
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
+# define ceiling_color 0x1b4f08
+# define floor_color 0x096a09
 
 typedef struct s_texture {
 	void	*img;
