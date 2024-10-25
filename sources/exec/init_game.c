@@ -26,7 +26,7 @@ void load_textures(t_data *data)
         !data->west_texture.img || !data->east_texture.img)
     {
         printf("Error\nFailed to load textures\n");
-        exit(EXIT_FAILURE);
+        exit(1); // a chan,ger par free all 
     }
 }
 
