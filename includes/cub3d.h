@@ -17,6 +17,13 @@
 # include <sys/types.h>
 # include <unistd.h>
 
+typedef struct s_texture {
+    void        *img;
+    int         *data;
+    int         width;
+    int         height;
+}               t_texture;
+
 typedef struct s_player
 {
 	double		x;
