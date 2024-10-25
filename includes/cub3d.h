@@ -17,6 +17,9 @@
 # include <sys/types.h>
 # include <unistd.h>
 
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 600
+
 typedef struct s_texture {
 	void	*img;
 	int	*data;
