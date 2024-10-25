@@ -18,11 +18,11 @@
 # include <unistd.h>
 
 typedef struct s_texture {
-    void        *img;
-    int         *data;
-    int         width;
-    int         height;
-}               t_texture;
+	void	*img;
+	int	*data;
+	int	width;
+	int	height;
+}		t_texture;
 
 typedef struct s_player
 {
@@ -39,6 +39,10 @@ typedef struct s_data
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_player	player;
+	t_texture        north_texture;
+	t_texture        south_texture;
+	t_texture        west_texture;
+	t_texture        east_texture;
 }				t_data;
 
 void			init_game(t_data *data);
