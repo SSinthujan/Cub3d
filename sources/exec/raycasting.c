@@ -147,6 +147,16 @@ void	perform_raycasting(t_data *data)
 		if (draw_end >= WIN_HEIGHT)
 			draw_end = WIN_HEIGHT - 1;
 
+		// texture en fonction de la direction du mur
+	        if (side == 1 && ray_dir_y > 0)
+	            current_texture = &data->north_texture;  // mur nord
+	        else if (side == 1 && ray_dir_y < 0)
+	            current_texture = &data->south_texture;  // mur sud
+	        else if (side == 0 && ray_dir_x > 0)
+	            current_texture = &data->west_texture;   // mur ouest
+	        else
+	            current_texture = &data->east_texture;   // mur est
+		
 		// ciel
 		int y = 0;
 		while (y < draw_start)
