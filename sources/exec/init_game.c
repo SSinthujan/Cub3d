@@ -38,7 +38,7 @@ void init_game(t_data *data)
         printf("Error\nFailed to initialize MLX\n");
         exit(1); // a changer par free all
     }
-    data->win_ptr = mlx_new_window(data->mlx_ptr, 800, 600, "cub3d");
+    data->win_ptr = mlx_new_window(data->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, "cub3d");
     if (!data->mlx_ptr)
     {
         printf("Error\nFailed to create window\n");
