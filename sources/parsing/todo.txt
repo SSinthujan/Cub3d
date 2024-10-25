@@ -6,3 +6,5 @@
 							N,S,E,W = position de depart + orientation;
 	- map fermer par les murs 
 	- remplacer/supprimer les espaces/lignes vide dans la map par des 0
+
+3. verifier si les couleurs sont rgb

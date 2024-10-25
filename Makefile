@@ -1,66 +1,44 @@
-NAME            = cub3D
+CC					= cc
+RM					= rm -f
+CFLAGS				= -Wextra -Wall -Werror -g3
+LDFLAGS				= -L./libft/printf/ -L./libft/ -lreadline -lncurses -lftprintf -lft
+INCLUDE_PATH 		= ./includes/
+CUB3DNAME 		= minishell
+CUB3DSRCS		= ./parsing/check_map.c\
+					./exec/init_game.c\
+					main.c
+CUB3DOBJS 		= $(CUB3DSRCS:.c=.o)
 
-DIR_SRCS        = sources
+LIBFT_PATH = ./libft/
 
-DIR_OBJS        = objects
+LIBFT = $(LIBFT_PATH)libft.a
+MAKEFLAGS += --no-print-directory
 
-SRCS_NAMES      = main.c \
-                  exec/init_game.c
+all:			$(CUB3DNAME)
 
-OBJS_NAMES      = ${SRCS_NAMES:.c=.o}
+.c.o:
+	@$(CC) $(CFLAGS) -I$(INCLUDE_PATH) -c $< -o $(<:.c=.o)
 
-DEPS            = ${SRCS_NAMES:.c=.d}
+$(CUB3DNAME):	$(CUB3DOBJS) $(LIBFT) 
+					@$(CC) -o $(CUB3DNAME) $(CUB3DOBJS) $(CFLAGS) $(LDFLAGS) -I$(INCLUDE_PATH)
 
-SRCS            = $(addprefix $(DIR_SRCS)/,$(SRCS_NAMES))
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_PATH)
 
-OBJS            = $(addprefix $(DIR_OBJS)/,$(OBJS_NAMES))
-
-INC             = -Iincludes
-
-LIB             = -Llibft -lft
-
-LIBFT           = libft.a
-
-PRINTF          = libftprintf.a
-
-CC              = cc
-
-CDFLAGS         = -MMD -MP
-
-MLX_FLAGS       = -lm -lmlx -lXext -lX11
-
-CFLAGS          = -Wall -Werror -Wextra
-
-all:    ${NAME}
-
-$(NAME): $(DIR_OBJS) $(OBJS)
-	make -C libft
-	make -C mlx
-	$(CC) -g3 ${INC} $(OBJS) $(LIB) mlx/libmlx.a mlx/libmlx_Linux.a -L. -lXext -L. -lm -lX11 -o $(NAME)
-	@echo "\033[31;5mcub3d\033[0m"
-
-$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c
-	@mkdir -p $(dir $@)
-	$(CC) -g3 $(CFLAGS) $(CDFLAGS) $(INC) -c $< -o $@
-
-$(DIR_OBJS):
-	mkdir -p $(DIR_OBJS)
-
-norm:
-	norminette srcs/ includes/
+$(LIBFTPRINTF):
+	@$(MAKE) -C $(LIBFTPRINTF_PATH)
 
 clean:
-	make clean -C mlx
-	make clean -C libft
-	rm -rf ${DIR_OBJS}
+				@$(RM) $(CUB3DOBJS)
+				@$(MAKE) -C $(LIBFT_PATH) clean
+				@echo "Object files cleaned"
 
-fclean: clean
-	make fclean -C libft
-	rm -rf ${LIBFT}
-	rm -rf ${NAME}
+fclean:	 		clean
+				@$(RM) $(CUB3DNAME)
+				@$(MAKE) -C $(LIBFT_PATH) fclean
+				@echo "Executable $(NAME) removed"
 
-re: fclean all
+re:				fclean 
+				@$(MAKE) all
 
--include $(OBJS:.o=.d)
-
-.PHONY: all clean fclean re
+.PHONY:			all clean fclean re
