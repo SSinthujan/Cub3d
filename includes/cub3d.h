@@ -25,6 +25,7 @@
 typedef struct s_texture {
 	void	*img;
 	int	*data;
+	char name;
 	int	width;
 	int	height;
 }		t_texture;
