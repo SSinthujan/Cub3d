@@ -8,18 +8,18 @@ INCLUDE_PATH 		= ./includes/
 CUB3DNAME 			= cub3d
 CUB3DSRCS			= ./sources/parsing/check_map.c \
 					  ./sources/exec/init_game.c \
-					  ./sources/main.c 
+					  ./sources/main.c
 CUB3DOBJS 			= $(CUB3DSRCS:.c=.o)
 
 LIBFT 				= $(LIBFT_PATH)libft.a
-MLX			= $(MLX_PATH)libmlx.a
+MLX					= $(MLX_PATH)libmlx.a
 
-all:			$(CUB3DNAME)
+all:				$(CUB3DNAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -I$(INCLUDE_PATH) -c $< -o $@
 
-$(CUB3DNAME):	$(CUB3DOBJS) $(LIBFT) $(MLX) 
+$(CUB3DNAME):	$(CUB3DOBJS) $(LIBFT) $(MLX)
 				$(CC) -o $(CUB3DNAME) $(CUB3DOBJS) $(CFLAGS) $(LDFLAGS)
 
 $(LIBFT):
@@ -30,11 +30,14 @@ $(MLX):
 
 clean:
 				$(RM) $(CUB3DOBJS)
+				@$(MAKE) -C $(LIBFT_PATH) clean
+				@$(MAKE) -C $(MLX_PATH) clean
 
 fclean:	 		clean
 				$(RM) $(CUB3DNAME)
+				@$(MAKE) -C $(LIBFT_PATH) fclean
 
-re:				fclean 
+re:				fclean
 				$(MAKE) all
 
 .PHONY:			all clean fclean re
