@@ -20,7 +20,7 @@ all:				$(CUB3DNAME)
 	$(CC) $(CFLAGS) -I$(INCLUDE_PATH) -c $< -o $@
 
 $(CUB3DNAME):	$(CUB3DOBJS) $(LIBFT) $(MLX)
-				$(CC) -o $(CUB3DNAME) $(CUB3DOBJS) $(CFLAGS) $(LDFLAGS)
+				$(CC) -o $(CUB3DNAME) $(CUB3DOBJS) $(CFLAGS) $(LDFLAGS) -lm
 
 $(LIBFT):
 				$(MAKE) -C $(LIBFT_PATH)
