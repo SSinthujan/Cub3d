@@ -1,3 +1,5 @@
+#include "cub3d.h"
+
 /*
 
 ça c'est une grille (une map en gros)
@@ -31,149 +33,93 @@ et side_dist_x c la distance exact a laquelle ton rayon va passer a une autre ce
 // je calcule les cordonnées X et Y des textures pour chaque colonne
 // et japplique pixel par pixel la texture en remplacant la couleur par la couleur du pixel de la cordonnée de la la texture
 
-#include "cub3d.h"
-
-void	draw_vertical_line(t_data *data, int x, int draw_start, int draw_end, int color)
+void define_direction(t_data *data, t_ray *ray)
 {
-	int y;
-
-	y = draw_start;
-	while (y < draw_end)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, color);
-		y++;
-	}
+    if (ray->ray_dir_x < 0)
+    {
+        ray->step_x = -1;
+        ray->side_dist_x = (data->player.x - ray->map_x) * ray->delta_dist_x;
+    }
+    else
+    {
+        ray->step_x = 1;
+        ray->side_dist_x = (ray->map_x + 1.0 - data->player.x) * ray->delta_dist_x;
+    }
+    if (ray->ray_dir_y < 0)
+    {
+        ray->step_y = -1;
+        ray->side_dist_y = (data->player.y - ray->map_y) * ray->delta_dist_y;
+    }
+    else
+    {
+        ray->step_y = 1;
+        ray->side_dist_y = (ray->map_y + 1.0 - data->player.y) * ray->delta_dist_y;
+    }
 }
 
-void	perform_raycasting(t_data *data)
+void initialize_ray(t_data *data, t_ray *ray, int x)
 {
-	int		x;
-	double	camera_x;
-	double	ray_dir_x;
-	double	ray_dir_y;
-	int		map_x;
-	int		map_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-	int		step_x;
-	int		step_y;
-	int		hit;
-	int		side;
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
-	t_texture	*current_texture;
+    double camera_x;
 
-	x = 0;
-	while (x < WIN_WIDTH)
-	{
-		camera_x = 2 * x / (double)WIN_WIDTH - 1;
-		ray_dir_x = data->player.dirX + data->player.planeX * camera_x; // direction du rayon
-		ray_dir_y = data->player.dirY + data->player.planeY * camera_x;
-		map_x = (int)data->player.x; // position actuelle en int
-		map_y = (int)data->player.y;
+    camera_x = 2 * x / (double)WIN_WIDTH - 1;
+    ray->ray_dir_x = data->player.dirX + data->player.planeX * camera_x;
+    ray->ray_dir_y = data->player.dirY + data->player.planeY * camera_x;
+    ray->map_x = (int)data->player.x;
+    ray->map_y = (int)data->player.y;
+}
 
-		// distance que le rayon parcourt
-        if (ray_dir_x == 0)
-            delta_dist_x = fabs(1 / 0.0001);
-        else
-            delta_dist_x = fabs(1 / ray_dir_x);
+void render_column(t_data *data, t_ray *ray, int x)
+{
+    t_draw draw;
+    t_texture *current_texture;
+    double perp_wall_dist;
+    double wall_x;
+    int y;
 
-        if (ray_dir_y == 0)
-            delta_dist_y = fabs(1 / 0.0001);
-        else
-            delta_dist_y = fabs(1 / ray_dir_y);
+    perp_wall_dist = calculate_perp_wall_dist(data, ray);
+    draw.line_height = (int)(WIN_HEIGHT / perp_wall_dist);
+    calculate_draw_limits(&draw, WIN_HEIGHT);
+    current_texture = select_texture(data, ray);
+    // Draw ceiling using a while loop
+    y = 0;
+    while (y < draw.draw_start)
+    {
+        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x1b4f08); // Ceiling color
+        y++;
+    }
 
-		hit = 0;
+    // Calculate wall_x based on the side
+    if (ray->side == 0)
+        wall_x = data->player.y + perp_wall_dist * ray->ray_dir_y;
+    else
+        wall_x = data->player.x + perp_wall_dist * ray->ray_dir_x;
+    wall_x -= floor(wall_x);
 
-		
-		if (ray_dir_x < 0)
-		{
-			step_x = -1;
-			side_dist_x = (data->player.x - map_x) * delta_dist_x;
-		}
-		else
-		{
-			step_x = 1;
-			side_dist_x = (map_x + 1.0 - data->player.x) * delta_dist_x;
-		}
-		if (ray_dir_y < 0)
-		{
-			step_y = -1;
-			side_dist_y = (data->player.y - map_y) * delta_dist_y;
-		}
-		else
-		{
-			step_y = 1;
-			side_dist_y = (map_y + 1.0 - data->player.y) * delta_dist_y;
-		}
+    calculate_tex_x(&draw, ray, current_texture, wall_x);
+    draw_column(data, x, &draw, current_texture);
 
-		while (hit == 0)
-		{
-			// avance dans la direction X ou Y en fonction de la distance
-			if (side_dist_x < side_dist_y)
-			{
-				side_dist_x += delta_dist_x;
-				map_x += step_x;
-				side = 0;
-			}
-			else
-			{
-				side_dist_y += delta_dist_y;
-				map_y += step_y;
-				side = 1;
-			}
+    // Draw floor using a while loop
+    y = draw.draw_end + 1;
+    while (y < WIN_HEIGHT)
+    {
+        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x096a09); // Floor color
+        y++;
+    }
+}
 
-			// verifie si le ray a toucher le mur
-			if (data->config->map[map_y][map_x] == '1')
-				hit = 1;
-		}
+void perform_raycasting(t_data *data)
+{
+    int x;
+    t_ray ray;
 
-		// calcul la distance perpendiculaire au mur
-		if (side == 0)
-			perp_wall_dist = (map_x - data->player.x + (1 - step_x) / 2) / ray_dir_x;
-		else
-			perp_wall_dist = (map_y - data->player.y + (1 - step_y) / 2) / ray_dir_y;
-
-		// calcul de la hauteur du mur par rapport a la taille dla window (plus jsuis proche plus c haut)
-		line_height = (int)(WIN_HEIGHT / perp_wall_dist);
-		draw_start = -line_height / 2 + WIN_HEIGHT / 2;
-		if (draw_start < 0)
-			draw_start = 0;
-		draw_end = line_height / 2 + WIN_HEIGHT / 2;
-		if (draw_end >= WIN_HEIGHT)
-			draw_end = WIN_HEIGHT - 1;
-
-		// texture en fonction de la direction du mur
-	        if (side == 1 && ray_dir_y > 0)
-	            current_texture = &data->north_texture;  // mur nord
-	        else if (side == 1 && ray_dir_y < 0)
-	            current_texture = &data->south_texture;  // mur sud
-	        else if (side == 0 && ray_dir_x > 0)
-	            current_texture = &data->west_texture;   // mur ouest
-	        else
-	            current_texture = &data->east_texture;   // mur est
-		
-		// ciel
-		int y = 0;
-		while (y < draw_start)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, CEILING_COLOR);
-			y++;
-		}
-		// mur avec couleur verte
-		draw_vertical_line(data, x, draw_start, draw_end, 0X45536b);
-
-		// sol
-		y = draw_end;
-		while (y < WIN_HEIGHT)
-		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, FLOOR_COLOR);
-			y++;
-		}
-		x += 1;
-	}
+    x = 0;
+    while (x < WIN_WIDTH)
+    {
+        initialize_ray(data, &ray, x);
+        initialize_delta(&ray);
+        define_direction(data, &ray);
+        if (perform_dda(data, &ray))
+            render_column(data, &ray, x);
+        x++;
+    }
 }
