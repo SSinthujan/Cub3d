@@ -80,7 +80,7 @@ void render_column(t_data *data, t_ray *ray, int x)
     draw.line_height = (int)(WIN_HEIGHT / perp_wall_dist);
     calculate_draw_limits(&draw, WIN_HEIGHT);
     current_texture = select_texture(data, ray);
-    // Draw ceiling using a while loop
+    // ciel
     y = 0;
     while (y < draw.draw_start)
     {
@@ -88,7 +88,7 @@ void render_column(t_data *data, t_ray *ray, int x)
         y++;
     }
 
-    // Calculate wall_x based on the side
+    // calcuil wall_x based on the side
     if (ray->side == 0)
         wall_x = data->player.y + perp_wall_dist * ray->ray_dir_y;
     else
@@ -98,7 +98,7 @@ void render_column(t_data *data, t_ray *ray, int x)
     calculate_tex_x(&draw, ray, current_texture, wall_x);
     draw_column(data, x, &draw, current_texture);
 
-    // Draw floor using a while loop
+    // sol
     y = draw.draw_end + 1;
     while (y < WIN_HEIGHT)
     {
