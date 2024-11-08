@@ -84,7 +84,7 @@ void render_column(t_data *data, t_ray *ray, int x)
     y = 0;
     while (y < draw.draw_start)
     {
-        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x1b4f08); // Ceiling color
+        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x1b4f08); // couleur ciel
         y++;
     }
 
@@ -102,7 +102,7 @@ void render_column(t_data *data, t_ray *ray, int x)
     y = draw.draw_end + 1;
     while (y < WIN_HEIGHT)
     {
-        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x096a09); // Floor color
+        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x096a09); // couleur sol
         y++;
     }
 }
