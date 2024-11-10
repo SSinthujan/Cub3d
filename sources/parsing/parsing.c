@@ -6,18 +6,11 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 20:33:04 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/07 20:34:25 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/10 14:20:40 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	check_extension(char *cub)
-{
-	if (ft_strstr(cub, ".cub"))
-		return (0);
-	return (1);
-}
 
 int	nb_ligne(char *file)
 {

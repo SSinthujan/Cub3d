@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+        
+/*                                                    +:+ +:+
 	+:+     */
-/*   By: alyildiz <marvin@42.fr>                    +#+  +:+      
+/*   By: alyildiz <marvin@42.fr>                    +#+  +:+
 	+#+        */
-/*                                                +#+#+#+#+#+  
+/*                                                +#+#+#+#+#+
 	+#+           */
 /*   Created: 2023/05/06 07:16:12 by alyildiz          #+#    #+#             */
 /*   Updated: 2023/05/06 07:43:35 by alyildiz         ###   ########.fr       */
@@ -57,6 +57,7 @@ char	*ft_strdup(const char *src);
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin2(char *s1, char *s2, int len);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(const char *str, char charset);
 char	*ft_itoa(int n);

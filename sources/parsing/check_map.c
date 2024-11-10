@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:14:22 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/09 00:13:32 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/10 18:42:56 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 /*
 	ETAPE 0
-	verifier nom de map si il se termine bien par .cub
+	verifier nom de map si il se termine bien par .cub --> check_mapname
 
 	ETAPE 1
-	ouvrir le fichier de la map
-	prendre les 6 premieres lignes non vides avec gnl
-	si moins de 6 lignes -----> erreur
+	ouvrir le fichier de la map 						}
+	prendre les 6 premieres lignes non vides avec gnl	} ---> read_config
+	si moins de 6 lignes -----> erreur					}
 	check si il y a NO SO WE EA (pas d'ordre precis), pas de doublons --> erreur
 	check si le mpx file to img a fonctionner correctement si oui -> continue
 																non free tout et return 1
@@ -36,7 +36,7 @@
 
 */
 
-int	check_namefile(char *str)
+int	check_mapname(char *str)
 {
 	int	c;
 
@@ -49,27 +49,3 @@ int	check_namefile(char *str)
 	return (0);
 }
 
-char	check_config(char *config)
-{
-	int		fd;
-	int		i;
-	char	*str;
-	char	*line;
-
-	str = NULL;
-	i = 0;
-	fd = open(config, O_RDONLY);
-	if (fd == -1)
-		return (printf("Error\nMap non-existent\n"), NULL);
-	while (i < 6)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		str = ft_strjoin(str, line);
-		free(line);
-		if (!fonction qui check si une ligne est vide)
-	}
-	close(fd);
-	return (str);
-}
