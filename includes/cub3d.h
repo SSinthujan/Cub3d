@@ -72,13 +72,6 @@ typedef struct s_player
 }				t_player;
 
 // STRUCTURE PARSING
-enum DIRECTION {
-	NORD,
-	SUD,
-	OUEST,
-	EST,
-};
-
 typedef struct s_config
 {
 	char *texture[4];

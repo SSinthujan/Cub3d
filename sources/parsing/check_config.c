@@ -6,13 +6,14 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:20:15 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/10 21:05:09 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:27:01 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-//TODO: check si les parametre des fonctions *read_config/check_config sont les bonnes, elles doivent avoir en entree le fichier de la map 
+// TODO: check si les parametre des fonctions *read_config/check_config sont les bonnes,
+//	elles doivent avoir en entree le fichier de la map
 
 int	check_emptyline(char *line)
 {
@@ -28,7 +29,7 @@ int	check_emptyline(char *line)
 	return (0);
 }
 
-char *check_str(int i, char *str)
+char	*check_str(int i, char *str)
 {
 	if (i != 6)
 	{
@@ -66,12 +67,12 @@ char	*read_config(char *map)
 	close(fd);
 	return (check_str(i, str));
 }
+
 void	free_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-
 	while (tab[i])
 		free(tab[i++]);
 	free(tab);
@@ -80,10 +81,10 @@ void	free_tab(char **tab)
 // split la str dans un tableau de 6 pour check NO etc..
 int	check_config(char *map)
 {
-	char **elements;
-	char *elements_str;
-	int i;
-	t_config config;
+	char		**elements;
+	char		*elements_str;
+	int			i;
+	t_config	config;
 
 	i = 0;
 	elements_str = read_config(map);
@@ -91,18 +92,15 @@ int	check_config(char *map)
 		return (1);
 	elements = ft_split(elements_str, '\n');
 	free(elements_str);
-	//check chaque str du tableau et l'allouer dans une structure config
-	while(i < 6)
+	// check chaque str du tableau et l'allouer dans une structure config
+	while (i < 6)
 	{
-		// int isok = check_texture(config, elements[i]);
-		// printf("is ok = %i\n", isok);
-		// if (!isok)
-		// 	break;
-		// i++;
-		if ()
-		i++;
+		if (!check_texture(config, elements[i]) || !check_color(config,
+				elements[i]))
+			i++;
+		else
+			return (free_tab(elements), 1); // free structure config
 	}
-	// check que i est bien 
 	free_tab(elements);
 	return (0);
 }
