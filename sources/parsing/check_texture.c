@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:12:54 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/12 22:03:13 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/14 20:27:14 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,49 @@ char	*get_word(char *str)
 
 int	get_color(t_config config, char *str, int nbr)
 {
-	int i;
-	char *element;
-
-	i = skip_whitespace(str);
-	if (i == 0)
-		return (1);
-	element = ft_strlcpy();
 	if (nbr == 1)
 	{
 		if (config.ceiling_color)
-			return (0);
-		config.ceiling_color = ft_s
+			return (1);
+		config.ceiling_color = get_word(str);
 	}
-	
+	else
+	{
+		if (config.floor_color)
+			return (1);
+		config.floor_color = get_word(str);
+	}
+	return (0);
 }
 
 // skip le NO (etc) prendre le str suivant et l'assigner a la texture correspondante
 int	get_texture(t_config config, char *str, int nbr)
 {
+	if (nbr == 1)
+	{
+		if(config.north_texture)
+			return (1);
+		config.north_texture = get_word(str);
+	}
+	if (nbr == 2)
+	{
+		if(config.south_texture)
+			return (1);
+		config.south_texture = get_word(str);
+	}
+	if (nbr == 3)
+	{
+		if(config.east_texture)
+			return (1);
+		config.east_texture = get_word(str);
+	}
+	if (nbr == 4)
+	{
+		if(config.west_texture)
+			return (1);
+		config.west_texture = get_word(str);
+	}
+	return (0);
 }
 
 int	check_color(t_config config, char *str)

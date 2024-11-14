@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:14:22 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/10 18:42:56 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/14 20:38:40 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 	ouvrir le fichier de la map 						}
 	prendre les 6 premieres lignes non vides avec gnl	} ---> read_config
 	si moins de 6 lignes -----> erreur					}
-	check si il y a NO SO WE EA (pas d'ordre precis), pas de doublons --> erreur
-	check si le mpx file to img a fonctionner correctement si oui -> continue
-																non free tout et return 1
-	check si il y a F C (pas d'ordre precis), pas de doublons --> erreur
-	check si le rgb est composer de 3 nombres compris entre 0 et 255 separe par 2 virgules si oui
+	check si il y a F C (pas d'ordre precis), pas de doublons --> erreur							}
+	check si il y a NO SO WE EA (pas d'ordre precis), pas de doublons --> erreur 					}--> check.texture
+	check si le rgb est composer de 3 nombres compris entre 0 et 255 separe par 2 virgules si oui   }
+	check si le mpx file to img a fonctionner correctement si oui -> continue			  }  pas sur
+																non free tout et return 1 }  pas sur
 		-> continue ETAPE 2
 																non free tout et return 1
 
