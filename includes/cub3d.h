@@ -80,8 +80,8 @@ typedef struct s_config
 	char *south_texture;     // Chemin vers la texture du mur sud
 	char *west_texture;      // Chemin vers la texture du mur ouest
 	char *east_texture;      // Chemin vers la texture du mur est
-	char *floor_color;      // Couleur du sol (RGB)
-	char *ceiling_color;    // Couleur du plafond (RGB)
+	int floor_color[3];      // Couleur du sol (RGB)
+	int ceiling_color[3];    // Couleur du plafond (RGB)
 	char **map;              // Carte 2D
 	int map_width;           // Largeur de la carte
 	int map_height;          // Hauteur de la carte
@@ -136,5 +136,5 @@ int				perform_dda(t_data *data, t_ray *ray);
 
 // PARSING
 int				check_mapname(char *cub);
-
+void			free_tab(char **tab);
 #endif

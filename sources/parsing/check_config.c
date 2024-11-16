@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 // TODO: check si les parametre des fonctions *read_config/check_config sont les bonnes,
 //	elles doivent avoir en entree le fichier de la map
@@ -23,13 +23,13 @@ int	check_emptyline(char *line)
 	while (line[i])
 	{
 		if (!(line[i] == ' ' || (line[i] >= 9 && line[i] <= 13)))
-			return (1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
-char	*check_str(int i, char *str)
+char	*count_elements(int i, char *str)
 {
 	if (i != 6)
 	{
@@ -57,7 +57,7 @@ char	*read_config(char *map)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (check_emptyline(line))
+		if (!check_emptyline(line))
 		{
 			str = ft_strjoin2(str, line, ft_strlen(line));
 			i++;
@@ -65,7 +65,7 @@ char	*read_config(char *map)
 		free(line);
 	}
 	close(fd);
-	return (check_str(i, str));
+	return (count_elements(i, str));
 }
 
 void	free_tab(char **tab)
@@ -95,7 +95,7 @@ int	check_config(char *map)
 	// check chaque str du tableau et l'allouer dans une structure config
 	while (i < 6)
 	{
-		if (!check_texture(config, elements[i]) || !check_color(config,
+		if (!check_texture(&config, elements[i]) || !check_color(&config,
 				elements[i]))
 			i++;
 		else

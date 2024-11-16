@@ -13,6 +13,8 @@
 #include "cub3d.h"
 
 /*
+	//todo fonction init structure , init t_config rgb a -1 (look check_rgb)
+
 	ETAPE 0
 	verifier nom de map si il se termine bien par .cub --> check_mapname
 
