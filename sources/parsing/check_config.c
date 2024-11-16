@@ -6,11 +6,11 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:20:15 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/12 20:27:01 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/16 20:06:37 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "cub3d.h"
 
 // TODO: check si les parametre des fonctions *read_config/check_config sont les bonnes,
 //	elles doivent avoir en entree le fichier de la map

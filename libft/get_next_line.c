@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alyildiz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 00:44:23 by alyildiz          #+#    #+#             */
-/*   Updated: 2024/11/05 01:43:01 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2023/05/30 01:18:24 by alyildiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define BUFFER_SIZE 42
 #endif
 
-int	ft_strchr2(const char *str, int c)
+int	ft_strchr(const char *str, int c)
 {
 	size_t	i;
 
@@ -33,7 +33,7 @@ int	ft_strchr2(const char *str, int c)
 	return (0);
 }
 
-char	*ft_strjoin2(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		len1;
 	int		len2;
@@ -121,13 +121,13 @@ char	*get_next_line(int fd)
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while (bytes_read && !ft_strchr2(stash, '\n'))
+	while (bytes_read && !ft_strchr(stash, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 			return (free(buffer), NULL);
 		buffer[bytes_read] = '\0';
-		stash = ft_strjoin2(stash, buffer);
+		stash = ft_strjoin(stash, buffer);
 		if (!stash)
 			return (free(buffer), NULL);
 	}

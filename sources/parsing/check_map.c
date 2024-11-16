@@ -6,14 +6,14 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:14:22 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/14 20:38:40 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/16 20:05:59 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-	//todo fonction init structure , init t_config rgb a -1 (look check_rgb)
+	todo fonction init structure , init t_config rgb a -1 (look check_rgb)
 
 	ETAPE 0
 	verifier nom de map si il se termine bien par .cub --> check_mapname
@@ -50,4 +50,3 @@ int	check_mapname(char *str)
 	}
 	return (0);
 }
-
