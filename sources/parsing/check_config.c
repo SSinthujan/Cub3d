@@ -6,14 +6,11 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:20:15 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/16 20:06:37 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/18 20:06:27 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// TODO: check si les parametre des fonctions *read_config/check_config sont les bonnes,
-//	elles doivent avoir en entree le fichier de la map
 
 int	check_emptyline(char *line)
 {
@@ -40,9 +37,8 @@ char	*count_elements(int i, char *str)
 	return (str);
 }
 
-char	*read_config(char *map)
+char	*read_config(char *map, int *fd)
 {
-	int		fd;
 	int		i;
 	char	*str;
 	char	*line;
@@ -64,18 +60,7 @@ char	*read_config(char *map)
 		}
 		free(line);
 	}
-	close(fd);
 	return (count_elements(i, str));
-}
-
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-		free(tab[i++]);
-	free(tab);
 }
 
 // split la str dans un tableau de 6 pour check NO etc..
@@ -87,19 +72,18 @@ int	check_config(char *map)
 	t_config	config;
 
 	i = 0;
-	elements_str = read_config(map);
+	elements_str = read_config(map, &config.fd);
 	if (!elements_str)
-		return (1);
+		return (close(config.fd) ,1);
 	elements = ft_split(elements_str, '\n');
 	free(elements_str);
-	// check chaque str du tableau et l'allouer dans une structure config
 	while (i < 6)
 	{
 		if (!check_texture(&config, elements[i]) || !check_color(&config,
 				elements[i]))
 			i++;
 		else
-			return (free_tab(elements), 1); // free structure config
+			return (close(config.fd), free_tab(elements), 1); // free structure config
 	}
 	free_tab(elements);
 	return (0);

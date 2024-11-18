@@ -6,81 +6,30 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:12:54 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/16 20:06:57 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:00:15 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*get_word(char *str)
-{
-	int	i;
-	int j;
-	int k;
-	char *word;
-
-	i = 0;
-	while (!(str[i] == ' ' || (str[i] >= 9 && str[i] <= 13)))
-		i++;
-	while (str[i] && (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13)))
-		i++;
-	if (!str[i])
-		return (NULL);
-	j = i;
-	while (str[j] && !(str[j] == ' ' || (str[j] >= 9 && str[j] <= 13)))
-		j++;
-	word = malloc(sizeof(char) * (j - i + 1));
-	k = 0;
-	while (i < j)
-	{
-		word[k] = str[i];
-		i++;
-		k++;
-	}
-	word[k] = '\0';
-	return (word);
-}
-
-int check_rgb(t_config *config, char **rgb, int nbr)
-{
-	int i;
-	int value;
-
-	i = 0;
-	while (rgb[i])
-	{
-		value = ft_atoi(rgb[i]);
-		if (value < 0 || value > 255)
-			return (1);
-		if (nbr == 1)
-			config->ceiling_color[i] = value;
-		else
-			config->floor_color[i] = value;
-		i++;
-	}
-	if (i != 3)
-		return (1);
-	return (0);	
-}
-
 int	get_color(t_config *config, char *str, int nbr)
 {
-	char *rgb_str;
-	char **rgb;
+	char	*rgb_str;
 
-	if ((nbr == 1 && config->ceiling_color[0] != -1) || 
-		(nbr == 2 && config->floor_color[0] != -1))
-		return (1);
 	rgb_str = get_word(str);
 	if (!rgb_str)
 		return (1);
-	rgb = ft_split(rgb_str, ',');
+	if (nbr == 1 && !config->ceiling_color)
+	{
+		if (check_rgb(config->ceiling_color, rgb_str))
+			return (free(rgb_str), 1);
+	}
+	if (nbr == 2 && !config->floor_color)
+	{
+		if (check_rgb(config->floor_color, rgb_str))
+			return (free(rgb_str), 1);
+	}
 	free(rgb_str);
-	if (!rgb)
-		return (1);
-	if (check_rgb(config, rgb, nbr))
-			return (free_tab(rgb), 1);
-	free_tab(rgb);
 	return (0);
 }
 
@@ -89,25 +38,25 @@ int	get_texture(t_config *config, char *str, int nbr)
 {
 	if (nbr == 1)
 	{
-		if(config->north_texture)
+		if (config->north_texture)
 			return (1);
 		config->north_texture = get_word(str);
 	}
 	if (nbr == 2)
 	{
-		if(config->south_texture)
+		if (config->south_texture)
 			return (1);
 		config->south_texture = get_word(str);
 	}
 	if (nbr == 3)
 	{
-		if(config->east_texture)
+		if (config->east_texture)
 			return (1);
 		config->east_texture = get_word(str);
 	}
 	if (nbr == 4)
 	{
-		if(config->west_texture)
+		if (config->west_texture)
 			return (1);
 		config->west_texture = get_word(str);
 	}
@@ -128,7 +77,7 @@ int	check_color(t_config *config, char *str)
 			return (printf("Error\nMap texture\n"), 1);
 		return (0);
 	}
-	return (printf("Error\nMap texture\n")), 1;
+	return ((printf("Error\nMap texture\n")), 1);
 }
 
 // check str du tableau et verifier a quel NO (etc..) il correspond puis l'allouer dans la struct config
