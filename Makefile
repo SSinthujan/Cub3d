@@ -6,25 +6,20 @@ LIBFT_PATH 			= ./libft/
 LDFLAGS				= -L$(LIBFT_PATH) -lft -L$(MLX_PATH) -lmlx -I$(INCLUDE_PATH) -I$(MLX_PATH) -lXext -lX11
 INCLUDE_PATH 		= ./includes/
 CUB3DNAME 			= cub3d
-CUB3DSRCS			= ./sources/main.c \
-                  ./sources/exec/init_game.c \
-                  ./sources/exec/textures.c \
-                  ./sources/exec/utils.c \
-				  ./sources/exec/movements.c \
-				  ./sources/exec/keyhooks.c \
-				  ./sources/exec/rendering.c \
-				  ./sources/exec/raycasting.c
+CUB3DSRCS			= ./sources/main.c ./sources/parsing/check_map.c ./sources/parsing/check_texture.c ./sources/parsing/check_config.c \
+					  ./sources/parsing/texture_utils.c	./sources/parsing/parsing_utils.c
+
 CUB3DOBJS 			= $(CUB3DSRCS:.c=.o)
 
 LIBFT 				= $(LIBFT_PATH)libft.a
 MLX					= $(MLX_PATH)libmlx.a
 
-all:				$(CUB3DNAME)
+all:				$(LIBFT) $(MLX) $(CUB3DNAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -I$(INCLUDE_PATH) -c $< -o $@
 
-$(CUB3DNAME):	$(CUB3DOBJS) $(LIBFT) $(MLX)
+$(CUB3DNAME):	$(CUB3DOBJS) $(MLX) $(LIBFT)
 				$(CC) -o $(CUB3DNAME) $(CUB3DOBJS) $(CFLAGS) $(LDFLAGS) -lm
 
 $(LIBFT):

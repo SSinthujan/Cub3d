@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:20:15 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/18 20:06:27 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/26 06:35:05 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,20 @@ char	*read_config(char *map, int *fd)
 
 	str = NULL;
 	i = 0;
-	fd = open(map, O_RDONLY);
-	if (fd == -1)
+	*fd = open(map, O_RDONLY);
+	if (*fd == -1)
 		return (printf("Error\nCannot open the file\n"), NULL);
 	while (i < 6)
 	{
-		line = get_next_line(fd);
+		line = get_next_line(*fd);
 		if (!line)
 			break ;
 		if (!check_emptyline(line))
 		{
 			str = ft_strjoin2(str, line, ft_strlen(line));
+			if (!str)
+				return (free(line), printf("Error\nMemory allocation failed\n"),
+					NULL);
 			i++;
 		}
 		free(line);
@@ -64,26 +67,30 @@ char	*read_config(char *map, int *fd)
 }
 
 // split la str dans un tableau de 6 pour check NO etc..
-int	check_config(char *map)
+int	check_config(char *map, t_data *cub)
 {
-	char		**elements;
-	char		*elements_str;
-	int			i;
-	t_config	config;
+	char	**elements;
+	char	*elements_str;
+	int		i;
 
 	i = 0;
-	elements_str = read_config(map, &config.fd);
+	elements_str = read_config(map, &cub->config.fd);
 	if (!elements_str)
-		return (close(config.fd) ,1);
+	{
+		if (cub->config.fd > 0)
+			close(cub->config.fd);
+		return (1);
+	}
 	elements = ft_split(elements_str, '\n');
 	free(elements_str);
 	while (i < 6)
 	{
-		if (!check_texture(&config, elements[i]) || !check_color(&config,
-				elements[i]))
+		if (!check_texture(&cub->config, elements[i])
+			|| !check_color(&cub->config, elements[i]))
 			i++;
 		else
-			return (close(config.fd), free_tab(elements), 1); // free structure config
+			return (close(cub->config.fd), free_tab(elements), 1);
+				// free structure config
 	}
 	free_tab(elements);
 	return (0);

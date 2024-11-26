@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:14:22 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/16 20:05:59 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/26 06:59:46 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_mapname(char *str)
 {
 	int	c;
 
-	c = ft_strcmp(ft_strchr(str, '.'), ".cub");
+	c = ft_strcmp(ft_strrchr(str, '.'), ".cub");
 	if (c)
 	{
 		printf("Error\nMap name incorrect\n");

@@ -75,25 +75,27 @@ typedef struct s_player
 typedef struct s_config
 {
 	int			fd;
-	char *north_texture;     // Chemin vers la texture du mur nord
-	char *south_texture;     // Chemin vers la texture du mur sud
-	char *west_texture;      // Chemin vers la texture du mur ouest
-	char *east_texture;      // Chemin vers la texture du mur est
-	int floor_color[3];      // Couleur du sol (RGB)
-	int ceiling_color[3];    // Couleur du plafond (RGB)
-	char **map;              // Carte 2D
-	int map_width;           // Largeur de la carte
-	int map_height;          // Hauteur de la carte
-	int player_x;            // Position X du joueur dans la carte
-	int player_y;            // Position Y du joueur dans la carte
-	char player_orientation; // Orientation initiale du joueur ('N', 'S', 'E','W')
+	char		*north_texture;
+	char		*south_texture;
+	char		*west_texture;
+	char		*east_texture;
+	int			floor_color[3];
+	int			floor_set;
+	int			ceiling_color[3];
+	int			ceiling_set;
+	char		**map;
+	int			map_width;
+	int			map_height;
+	int			player_x;
+	int			player_y;
+	char		player_orientation;
 }				t_config;
 
 typedef struct s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	t_config	*config;
+	t_config	config;
 	t_player	player;
 	t_texture	north_texture;
 	t_texture	south_texture;
@@ -104,46 +106,14 @@ typedef struct s_data
 	int			texture_height;
 }				t_data;
 
-void			load_textures(t_data *data);
-void			init_game(t_data *data, char *cub_file);
-void			init_player(t_player *player, t_config *config);
-int				game_loop(t_data *data);
-int				close_window(t_data *data);
-void			handle_keyhook(t_data *data);
-int				key_pressed(int keycode, t_data *data);
-int				key_released(int keycode, t_data *data);
-void			move_forward(t_data *data);
-void			move_backward(t_data *data);
-void			move_left(t_data *data);
-void			move_right(t_data *data);
-void			rotate_left(t_data *data);
-void			rotate_right(t_data *data);
-void			define_direction(t_data *data, t_ray *ray);
-void			initialize_ray(t_data *data, t_ray *ray, int x);
-void			render_column(t_data *data, t_ray *ray, int x);
-void			perform_raycasting(t_data *data);
-t_texture		*select_texture(t_data *data, t_ray *ray);
-void			calculate_tex_x(t_draw *draw, t_ray *ray, t_texture *texture,
-					double wall_x);
-double			calculate_perp_wall_dist(t_data *data, t_ray *ray);
-void			calculate_draw_limits(t_draw *draw, int win_height);
-void			draw_column(t_data *data, int x, t_draw *draw,
-					t_texture *texture);
-void			free_map(t_config *config);
-void			initialize_delta(t_ray *ray);
-int				perform_dda(t_data *data, t_ray *ray);
-void			render_ceiling(t_data *data, int x, int draw_start);
-void			render_floor(t_data *data, int x, int draw_end);
-double			calculate_wall_x(t_data *data, t_ray *ray,
-					double perp_wall_dist);
-void			set_player_orientation_ns(t_player *player, t_config *config);
-void			set_player_orientation_ew(t_player *player, t_config *config);
-int				rgb_to_hex(int r, int g, int b);
-
 // PARSING
 int				check_mapname(char *cub);
+int				check_config(char *map, t_data *cub);
+int				check_texture(t_config *config, char *str);
+int				check_color(t_config *config, char *str);
 void			free_tab(char **tab);
 char			*get_word(char *str);
 int				check_rgb(int *color, char *rgb);
+int				ft_strcmp(const char *s1, const char *s2);
 
 #endif

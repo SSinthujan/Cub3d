@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:12:54 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/18 19:00:15 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/26 05:30:49 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,17 @@ int	get_color(t_config *config, char *str, int nbr)
 	rgb_str = get_word(str);
 	if (!rgb_str)
 		return (1);
-	if (nbr == 1 && !config->ceiling_color)
+	if (nbr == 1 && !config->ceiling_set)
 	{
 		if (check_rgb(config->ceiling_color, rgb_str))
 			return (free(rgb_str), 1);
+		config->ceiling_set = 1;
 	}
-	if (nbr == 2 && !config->floor_color)
+	if (nbr == 2 && !config->floor_set)
 	{
 		if (check_rgb(config->floor_color, rgb_str))
 			return (free(rgb_str), 1);
+		config->floor_set = 1;
 	}
 	free(rgb_str);
 	return (0);

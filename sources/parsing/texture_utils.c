@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:20 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/18 19:06:19 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/26 01:18:06 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ char	*get_word(char *str)
 	return (word);
 }
 
+int is_coma(char c, int *comma, int *current)
+{
+    if (c == ',')
+    {
+        if (*comma)
+            return (1);
+        *comma = 1;
+        (*current)++;
+        if (*current > 2)
+            return (1);
+    }
+    return (0);
+}
+
+
 int check_rgb(int *color, char *rgb)
 {
     int    current;
@@ -50,15 +65,8 @@ int check_rgb(int *color, char *rgb)
     comma = 1;
     while (*rgb != '\0')
     {
-        if (*rgb == ',')
-        {
-            if (comma)
-                return (1);
-            comma = 1;
-            current++;
-            if (current > 2)
-                return (1);
-        }
+        if (is_coma(*rgb, &comma, &current))
+            return (1);
         else if (*rgb < '0' || *rgb > '9')
             return (1);
         else
