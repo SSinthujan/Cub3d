@@ -67,6 +67,7 @@ typedef struct s_player
 	double		y;
 	double		dirX;
 	double		dirY;
+	double		dirangle;
 	double		planeX;
 	double		planeY;
 }				t_player;
@@ -97,10 +98,7 @@ typedef struct s_data
 	void		*win_ptr;
 	t_config	config;
 	t_player	player;
-	t_texture	north_texture;
-	t_texture	south_texture;
-	t_texture	west_texture;
-	t_texture	east_texture;
+	t_texture	wall[4];
 	t_movement	movement;
 	int			texture_width;
 	int			texture_height;
@@ -115,5 +113,42 @@ void			free_tab(char **tab);
 char			*get_word(char *str);
 int				check_rgb(int *color, char *rgb);
 int				ft_strcmp(const char *s1, const char *s2);
+
+// EXEC
+void			load_textures(t_data *data);
+void			init_game(t_data *data, char *cub_file);
+void			init_player(t_player *player, t_config *config);
+int				game_loop(t_data *data);
+int				close_window(t_data *data);
+void			handle_keyhook(t_data *data);
+int				key_pressed(int keycode, t_data *data);
+int				key_released(int keycode, t_data *data);
+void			move_forward(t_data *data);
+void			move_backward(t_data *data);
+void			move_left(t_data *data);
+void			move_right(t_data *data);
+void			rotate_left(t_data *data);
+void			rotate_right(t_data *data);
+void			define_direction(t_data *data, t_ray *ray);
+void			initialize_ray(t_data *data, t_ray *ray, int x);
+void			render_column(t_data *data, t_ray *ray, int x);
+void			perform_raycasting(t_data *data);
+t_texture		*select_texture(t_data *data, t_ray *ray);
+void			calculate_tex_x(t_draw *draw, t_ray *ray, t_texture *texture,
+					double wall_x);
+double			calculate_perp_wall_dist(t_data *data, t_ray *ray);
+void			calculate_draw_limits(t_draw *draw, int win_height);
+void			draw_column(t_data *data, int x, t_draw *draw,
+					t_texture *texture);
+void			free_map(t_config *config);
+void			initialize_delta(t_ray *ray);
+int				perform_dda(t_data *data, t_ray *ray);
+void			render_ceiling(t_data *data, int x, int draw_start);
+void			render_floor(t_data *data, int x, int draw_end);
+double			calculate_wall_x(t_data *data, t_ray *ray,
+					double perp_wall_dist);
+void			set_player_orientation_ns(t_player *player, t_config *config);
+void			set_player_orientation_ew(t_player *player, t_config *config);
+int				rgb_to_hex(int r, int g, int b);
 
 #endif

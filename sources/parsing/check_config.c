@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:20:15 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/26 06:35:05 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/26 23:41:27 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ int	check_config(char *map, t_data *cub)
 	free(elements_str);
 	while (i < 6)
 	{
-		if (!check_texture(&cub->config, elements[i])
-			|| !check_color(&cub->config, elements[i]))
-			i++;
-		else
+		if (check_texture(&cub->config, elements[i])
+			&& check_color(&cub->config, elements[i]))
 			return (close(cub->config.fd), free_tab(elements), 1);
 				// free structure config
+		else
+			i++;
 	}
 	free_tab(elements);
 	return (0);
