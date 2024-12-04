@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:20:15 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/26 23:41:27 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/30 20:00:22 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,20 @@ int	check_config(char *map, t_data *cub)
 	elements_str = read_config(map, &cub->config.fd);
 	if (!elements_str)
 	{
-		if (cub->config.fd > 0)
+		if (cub->config.fd >= 0)
 			close(cub->config.fd);
 		return (1);
 	}
 	elements = ft_split(elements_str, '\n');
+	// printf("elements = %s\n",elements_str);
 	free(elements_str);
 	while (i < 6)
 	{
-		if (check_texture(&cub->config, elements[i])
-			&& check_color(&cub->config, elements[i]))
-			return (close(cub->config.fd), free_tab(elements), 1);
-				// free structure config
-		else
+		if (!check_texture(&cub->config, elements[i])
+			|| !check_color(&cub->config, elements[i]))
 			i++;
+		else 
+			return (close(cub->config.fd), free_tab(elements), 1);// free structure config
 	}
 	free_tab(elements);
 	return (0);

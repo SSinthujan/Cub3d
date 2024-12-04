@@ -67,7 +67,6 @@ typedef struct s_player
 	double		y;
 	double		dirX;
 	double		dirY;
-	double		dirangle;
 	double		planeX;
 	double		planeY;
 }				t_player;
@@ -76,6 +75,7 @@ typedef struct s_player
 typedef struct s_config
 {
 	int			fd;
+	int			length;
 	char		*north_texture;
 	char		*south_texture;
 	char		*west_texture;

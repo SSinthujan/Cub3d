@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:12:54 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/26 23:12:57 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/11/30 19:37:44 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,17 @@ int	check_color(t_config *config, char *str)
 {
 	if (!ft_strncmp(str, "C ", 2))
 	{
-		if (!get_color(config, str, 1))
-			return (printf("Error\nMap texture 1\n"), 1);
+		if (get_color(config, str, 1))
+			return (printf("Error\nMap texture\n"), 1);
 		return (0);
 	}
 	if (!ft_strncmp(str, "F ", 2))
 	{
-		if (!get_color(config, str, 2))
+		if (get_color(config, str, 2))
 			return (printf("Error\nMap texture 2\n"), 1);
 		return (0);
 	}
-	return ((printf("Error\nMap texture 3\n")), 1);
+	return ((printf("Error\nWrong configuration\n")), 1);
 }
 
 // check str du tableau et verifier a quel NO (etc..) il correspond puis l'allouer dans la struct config
@@ -87,27 +87,27 @@ int	check_texture(t_config *config, char *str)
 {
 	if (!ft_strncmp(str, "NO ", 3))
 	{
-		if (!get_texture(config, str, 1))
-			return (printf("Error\nMap texture 4\n"), 1);
+		if (get_texture(config, str, 1))
+			return (printf("Error\nMap texture\n"), 1);
 		return (0);
 	}
 	if (!ft_strncmp(str, "SO ", 3))
 	{
-		if (!get_texture(config, str, 2))
-			return (printf("Error\nMap texture 5\n"), 1);
+		if (get_texture(config, str, 2))
+			return (printf("Error\nMap texture\n"), 1);
 		return (0);
 	}
 	if (!ft_strncmp(str, "EA ", 3))
 	{
-		if (!get_texture(config, str, 3))
-			return (printf("Error\nMap texture 6\n"), 1);
+		if (get_texture(config, str, 3))
+			return (printf("Error\nMap texture\n"), 1);
 		return (0);
 	}
 	if (!ft_strncmp(str, "WE ", 3))
 	{
-		if (!get_texture(config, str, 4))
-			return (printf("Error\nMap texture 7\n"), 1);
+		if (get_texture(config, str, 4))
+			return (printf("Error\nMap texture\n"), 1);
 		return (0);
 	}
-	return (printf("Error\nMap texture 8\n"), 1);
+	return (1);
 }
