@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 20:12:54 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/30 19:37:44 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:11:51 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,22 @@
 
 int	get_color(t_config *config, char *str, int nbr)
 {
-	char	*rgb_str;
+	char	rgb_str[12];
 
-	rgb_str = get_word(str);
-	if (!rgb_str)
+	if (!get_word(str, rgb_str, 11))
 		return (1);
 	if (nbr == 1 && !config->ceiling_set)
 	{
 		if (check_rgb(config->ceiling_color, rgb_str))
-			return (free(rgb_str), 1);
+			return (1);
 		config->ceiling_set = 1;
 	}
 	if (nbr == 2 && !config->floor_set)
 	{
 		if (check_rgb(config->floor_color, rgb_str))
-			return (free(rgb_str), 1);
+			return (1);
 		config->floor_set = 1;
 	}
-	free(rgb_str);
 	return (0);
 }
 
@@ -40,27 +38,31 @@ int	get_texture(t_config *config, char *str, int nbr)
 {
 	if (nbr == 1)
 	{
-		if (config->north_texture)
+		if (config->north_texture[0])
 			return (1);
-		config->north_texture = get_word(str);
+		if (!get_word(str, config->north_texture, PATH_MAX))
+			return (1);
 	}
 	if (nbr == 2)
 	{
-		if (config->south_texture)
+		if (config->south_texture[0])
 			return (1);
-		config->south_texture = get_word(str);
+		if (!get_word(str, config->south_texture, PATH_MAX))
+			return (1);
 	}
 	if (nbr == 3)
 	{
-		if (config->east_texture)
+		if (config->east_texture[0])
 			return (1);
-		config->east_texture = get_word(str);
+		if (!get_word(str, config->east_texture, PATH_MAX))
+			return (1);
 	}
 	if (nbr == 4)
 	{
-		if (config->west_texture)
+		if (config->west_texture[0])
 			return (1);
-		config->west_texture = get_word(str);
+		if (!get_word(str, config->west_texture, PATH_MAX))
+			return (1);
 	}
 	return (0);
 }

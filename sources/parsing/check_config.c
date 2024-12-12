@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:20:15 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/30 20:00:22 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:21:29 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	check_config(char *map, t_data *cub)
 		return (1);
 	}
 	elements = ft_split(elements_str, '\n');
-	// printf("elements = %s\n",elements_str);
 	free(elements_str);
 	while (i < 6)
 	{

@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:14:22 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/30 23:23:58 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:23:13 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,64 +41,63 @@
 
 */
 
-
-int	plen(char **map)
-{
-	int	i;
-
-	if (!map || !(*map))
-		return (0);
-	i = 0;
-	while (map[i])
-		i++;
-	return (i);
-}
-
-char	**join_tab(char **map, char *str)
-{
-	char	**res;
-	int		i;
-
-	res = malloc(sizeof(char *) * (plen(map) + 2));
-	if (!res)
-		return (NULL);
-	if (!map || !(*map))
-	{
-		res[0] = str;
-		res[1] = NULL;
-		return (res);
-	}
-	i = 0;
-	while (map[i])
-	{
-		res[i] = map[i];
-		i++;
-	}
-	res[i++] = str;
-	res[i] = NULL;
-	return (res);
-}
-
 int	check_mapname(char *str)
 {
 	return (ft_strcmp(ft_strrchr(str, '.'), ".cub"));
 }
 
-int	read_map(t_data *cub, char *line)
-{
-	while (line)
-	{
-		if (!*line)
-			return (1);
-		cub->config.map = join_tab(cub->config.map, line);
-		cub->config.length++;
-		cub->config.map_width = max(cub->config.map_width, ft_strlen(line));
-		line = get_next_line(cub->config.fd);
-	}
-	if (!cub->config.map_width)
-		return (1);
-	return (0);
-}
+// int	plen(char **map)
+// {
+// 	int	i;
+
+// 	if (!map || !(*map))
+// 		return (0);
+// 	i = 0;
+// 	while (map[i])
+// 		i++;
+// 	return (i);
+// }
+
+// char	**join_tab(char **map, char *str)
+// {
+// 	char	**res;
+// 	int		i;
+
+// 	res = malloc(sizeof(char *) * (plen(map) + 2));
+// 	if (!res)
+// 		return (NULL);
+// 	if (!map || !(*map))
+// 	{
+// 		res[0] = str;
+// 		res[1] = NULL;
+// 		return (res);
+// 	}
+// 	i = 0;
+// 	while (map[i])
+// 	{
+// 		res[i] = map[i];
+// 		i++;
+// 	}
+// 	res[i++] = str;
+// 	res[i] = NULL;
+// 	return (res);
+// }
+
+// int	read_map(t_data *cub, char *line)
+// {
+// 	while (line)
+// 	{
+// 		if (!*line)
+// 			return (1);
+// 		cub->config.map = join_tab(cub->config.map, line);
+// 		cub->config.length++;
+// 		cub->config.map_width = max(cub->config.map_width, ft_strlen(line));
+// 		line = get_next_line(cub->config.fd);
+// 	}
+// 	if (!cub->config.map_width)
+// 		return (1);
+// 	return (0);
+// }
 
 //int check_map(t_dat)
 

@@ -8,6 +8,8 @@
 # include <X11/keysym.h>
 # include <fcntl.h>
 # include <float.h>
+# include <limits.h>
+# include <linux/limits.h>
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -76,10 +78,10 @@ typedef struct s_config
 {
 	int			fd;
 	int			length;
-	char		*north_texture;
-	char		*south_texture;
-	char		*west_texture;
-	char		*east_texture;
+	char		north_texture[PATH_MAX];
+	char		south_texture[PATH_MAX];
+	char		west_texture[PATH_MAX];
+	char		east_texture[PATH_MAX];
 	int			floor_color[3];
 	int			floor_set;
 	int			ceiling_color[3];
@@ -110,7 +112,7 @@ int				check_config(char *map, t_data *cub);
 int				check_texture(t_config *config, char *str);
 int				check_color(t_config *config, char *str);
 void			free_tab(char **tab);
-char			*get_word(char *str);
+char			*get_word(char *str, char *dest, int size);
 int				check_rgb(int *color, char *rgb);
 int				ft_strcmp(const char *s1, const char *s2);
 

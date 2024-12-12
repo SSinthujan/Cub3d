@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alyildiz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 00:44:23 by alyildiz          #+#    #+#             */
-/*   Updated: 2023/05/30 01:18:24 by alyildiz         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:24:20 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,32 +108,36 @@ char	*add_left_to_stash(char *stash)
 	return (free(stash), left);
 }
 
+void __attribute__((destructor))  ft_freestash()
+{
+	get_next_line(-42);
+}
+
 char	*get_next_line(int fd)
 {
 	static char		*stash;
 	char			*line;
-	char			*buffer;
+	char			buffer[BUFFER_SIZE + 1];
 	int				bytes_read;
 
+	if (fd == -42 && stash)
+		return (free(stash), (char *)(stash = NULL), NULL);
 	bytes_read = 1;
 	if (BUFFER_SIZE <= 0)
-		return (NULL);
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
 		return (NULL);
 	while (bytes_read && !ft_strchr(stash, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (free(buffer), NULL);
+			return (NULL);
 		buffer[bytes_read] = '\0';
 		stash = ft_strjoin(stash, buffer);
 		if (!stash)
-			return (free(buffer), NULL);
+			return (NULL);
 	}
 	line = get_current_line(stash);
 	stash = add_left_to_stash(stash);
-	return (free(buffer), line);
+	return (line);
 }
 
 /*

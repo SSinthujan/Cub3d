@@ -6,18 +6,17 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:59:20 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/30 20:05:26 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:15:44 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*get_word(char *str)
+char	*get_word(char *str, char *dest, int size)
 {
 	int		i;
 	int		j;
 	int		k;
-	char	*word;
 
 	i = 0;
 	while (!(str[i] == ' ' || (str[i] >= 9 && str[i] <= 13)))
@@ -29,16 +28,14 @@ char	*get_word(char *str)
 	j = i;
 	while (str[j] && !(str[j] == ' ' || (str[j] >= 9 && str[j] <= 13)))
 		j++;
-	word = malloc(sizeof(char) * (j - i + 1));
 	k = 0;
-	while (i < j)
-	{
-		word[k] = str[i];
-		i++;
-		k++;
-	}
-	word[k] = '\0';
-	return (word);
+	while (i < j && k < size)
+		dest[k++] = str[i++];
+	dest[k] = '\0';
+    if (i < j)
+        return (NULL);
+    else
+	    return (dest);
 }
 
 int is_comma(char c, int *comma, int *current, int *color)
