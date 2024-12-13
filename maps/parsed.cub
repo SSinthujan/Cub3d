@@ -2,24 +2,11 @@ NO ./textures/wall1.xpm
 
 SO ./textures/wall2.xpm
 
-WE wqewe ./textures/wall3.xpm
+WE ./textures/wall3.xpm
 
 EA ./textures/wall4.xpm
 
 F 220,100,000
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 C 225,30,0
 

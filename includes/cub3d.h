@@ -117,8 +117,8 @@ int				check_rgb(int *color, char *rgb);
 int				ft_strcmp(const char *s1, const char *s2);
 
 // EXEC
-void			load_textures(t_data *data);
-void			init_game(t_data *data, char *cub_file);
+int				load_textures(t_data *data);
+int				init_game(t_data *data);
 void			init_player(t_player *player, t_config *config);
 int				game_loop(t_data *data);
 int				close_window(t_data *data);

@@ -39,12 +39,10 @@ int	close_window(t_data *data)
 	{
 		while (i < 4)		
 		{
-			if (&data->wall[i])
+			if (data->wall[i].img)
 				mlx_destroy_image(data->mlx_ptr, data->wall[i].img);
 			i++;
 		}
-		if (data->texture_width && data->texture_height)
-			mlx_destroy_image(data->mlx_ptr, data->win_ptr);
 		if (data->win_ptr)
 			mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_display(data->mlx_ptr);

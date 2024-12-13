@@ -82,7 +82,8 @@ int	main(int ac, char **av)
 	if (init_parse2(ac, av, &cub))
 		return (1);
 	init_parse(&cub.config); // finir le parsing et retirer
-	init_game(&cub, av[1]);
+	if (init_game(&cub))
+        return (1);
 	handle_keyhook(&cub);
 	mlx_loop_hook(cub.mlx_ptr, game_loop, &cub);
 	mlx_loop(cub.mlx_ptr);
