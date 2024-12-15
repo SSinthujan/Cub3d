@@ -89,7 +89,7 @@ int	check_config(char *map, t_data *cub)
 			|| !check_color(&cub->config, elements[i]))
 			i++;
 		else 
-			return (close(cub->config.fd), free_tab(elements), 1);// free structure config
+			return (close(cub->config.fd), free_tab(elements), 1);
 	}
 	free_tab(elements);
 	return (0);

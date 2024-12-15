@@ -26,13 +26,25 @@ int	init_parse2(int ac, char **av, t_data *cub)
 static char	*lines[4] = {"11111111111111", "1N000000000001", "11111111111111",
 		NULL};
 
+/*
+	todo:
+
+	fonction recup largeur max et longueur max
+	fonction qui fait une copie de la map
+	fonction qui check 	-> si ferme avec des 1
+						-> si il a y a qu'un seul player -> recup sa position (X, Y) et orientation (N, O, S, W)
+						-> pas coupé en 2
+	fonction qui remplace les cases vide par 0
+	
+*/
+
 void	init_parse(t_config *config)
 {
 	config->map_width = 14;
 	config->map_height = 3;
-	config->player_x = 1;            
+	config->player_x = 1;
 		// Player's initial X position (grid-based)
-	config->player_y = 1;            
+	config->player_y = 1;
 		// Player's initial Y position (grid-based)
 	config->player_orientation = 'N'; // Player is facing North
 	// config->map = malloc(sizeof(char *) * (config->map_height + 1)); //
@@ -89,13 +101,3 @@ int	main(int ac, char **av)
 	mlx_loop(cub.mlx_ptr);
 	return (0);
 }
-
-
-// int	main(int ac, char **av)
-// {
-// 	static t_data cub = {0};
-// 	if (init_parse(ac, av, &cub))
-// 		return (1);
-// 	print_config(&cub);
-// 	return (0);
-// }
