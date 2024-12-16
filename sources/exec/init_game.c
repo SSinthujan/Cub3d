@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:23:33 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/12 18:17:47 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/15 01:01:57 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	load_textures2(t_data *data)
 	if (!data->wall[2].img)
 	{
 		close_window(data);
-		return (printf("Error\nFailed to load textures\n"), 1);
+		printf("Error\nFailed to load textures\n");
+		return (1);
 	}
 	data->wall[2].data = (int *)mlx_get_data_addr(data->wall[2].img, &bpp,
 			&size_line, &endian);
@@ -80,15 +81,15 @@ int	init_game(t_data *data)
 	if (!data->win_ptr)
 	{
 		printf("Error\nFailed to create window\n");
-		mlx_destroy_display(data->mlx_ptr); 
-		free(data->mlx_ptr);                
+		mlx_destroy_display(data->mlx_ptr);
+		free(data->mlx_ptr);
 		return (1);
 	}
 	if (load_textures(data))
     {
         mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-        mlx_destroy_display(data->mlx_ptr);
-        free(data->mlx_ptr);
+		mlx_destroy_display(data->mlx_ptr);
+	   	free(data->mlx_ptr);
 		return (1);
     }
 	init_player(&data->player, &data->config);

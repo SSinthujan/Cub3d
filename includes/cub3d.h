@@ -115,6 +115,7 @@ void			free_tab(char **tab);
 char			*get_word(char *str, char *dest, int size);
 int				check_rgb(int *color, char *rgb);
 int				ft_strcmp(const char *s1, const char *s2);
+int				check_map(t_data *cub);
 
 // EXEC
 int				load_textures(t_data *data);

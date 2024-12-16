@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:22:57 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/12 18:17:57 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/16 04:25:39 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,6 @@ int	init_parse2(int ac, char **av, t_data *cub)
 
 static char	*lines[4] = {"11111111111111", "1N000000000001", "11111111111111",
 		NULL};
-
-/*
-	todo:
-
-	fonction recup largeur max et longueur max
-	fonction qui fait une copie de la map
-	fonction qui check 	-> si ferme avec des 1
-						-> si il a y a qu'un seul player -> recup sa position (X, Y) et orientation (N, O, S, W)
-						-> pas coupé en 2
-	fonction qui remplace les cases vide par 0
-	
-*/
 
 void	init_parse(t_config *config)
 {
@@ -58,6 +46,21 @@ void	init_parse(t_config *config)
 	config->map = lines;
 	// print_config(config);
 }
+
+// int	main(int ac, char **av)
+// {
+// 	static t_data	cub = {0};
+
+// 	if (init_parse2(ac, av, &cub))
+// 		return (1);
+// 	init_parse(&cub.config); // finir le parsing et retirer
+// 	if (init_game(&cub))
+//         return (1);
+// 	handle_keyhook(&cub);
+// 	mlx_loop_hook(cub.mlx_ptr, game_loop, &cub);
+// 	mlx_loop(cub.mlx_ptr);
+// 	return (0);
+// }
 
 void print_config(t_data *cub)
 {
@@ -86,18 +89,17 @@ void print_config(t_data *cub)
 	printf("east :%s\n", cub->config.east_texture);
 	printf("west :%s\n", cub->config.west_texture);
 }
-
 int	main(int ac, char **av)
 {
-	static t_data	cub = {0};
-
+	static t_data cub = {0};
 	if (init_parse2(ac, av, &cub))
 		return (1);
-	init_parse(&cub.config); // finir le parsing et retirer
-	if (init_game(&cub))
-        return (1);
-	handle_keyhook(&cub);
-	mlx_loop_hook(cub.mlx_ptr, game_loop, &cub);
-	mlx_loop(cub.mlx_ptr);
+	check_map(&cub);
+	print_config(&cub);
 	return (0);
 }
+
+// UTILS
+
+/*
+*/
