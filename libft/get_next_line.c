@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 00:44:23 by alyildiz          #+#    #+#             */
-/*   Updated: 2024/12/16 04:23:33 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:53:24 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ char	*add_left_to_stash(char *stash)
 	return (free(stash), left);
 }
 
-// void __attribute__((destructor))  ft_freestash()
-// {
-// 	get_next_line(-42);
-// }
+void __attribute__((destructor))  ft_freestash()
+{
+	get_next_line(-42);
+}
 
 char	*get_next_line(int fd)
 {
@@ -120,7 +120,7 @@ char	*get_next_line(int fd)
 	char			buffer[BUFFER_SIZE + 1];
 	int				bytes_read;
 
-	if (fd == -42 && stash)
+	if (fd == -42)
 		return (free(stash), (char *)(stash = NULL), NULL);
 	bytes_read = 1;
 	if (BUFFER_SIZE <= 0)

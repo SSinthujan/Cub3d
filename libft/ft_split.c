@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alyildiz <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 06:32:59 by alyildiz          #+#    #+#             */
-/*   Updated: 2023/05/06 06:33:00 by alyildiz         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:09:21 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_is_word(char *str, char charset)
 
 	i = 0;
 	word = 0;
-	if (!str[i])
+	if (!str || !str[i])
 		return (0);
 	while (str[i])
 	{

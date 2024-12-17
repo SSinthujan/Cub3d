@@ -7,7 +7,7 @@ LDFLAGS				= -L$(LIBFT_PATH) -lft -L$(MLX_PATH) -lmlx -I$(INCLUDE_PATH) -I$(MLX_
 INCLUDE_PATH 		= ./includes/
 CUB3DNAME 			= cub3d
 CUB3DSRCS			= .//sources/main.c ./sources/parsing/check_map.c ./sources/parsing/check_texture.c ./sources/parsing/check_config.c \
-					  ./sources/parsing/texture_utils.c	./sources/parsing/parsing_utils.c \
+					  ./sources/parsing/texture_utils.c	./sources/parsing/parsing_utils.c ./sources/parsing/verif_utils.c \
 					  ./sources/exec/init_game.c ./sources/exec/keyhooks.c ./sources/exec/movements.c ./sources/exec/raycasting.c ./sources/exec/rendering.c ./sources/exec/textures.c ./sources/exec/utils.c
 
 CUB3DOBJS 			= $(CUB3DSRCS:.c=.o)

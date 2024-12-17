@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:23:00 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/12 18:11:13 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/17 19:43:14 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ int	perform_dda(t_data *data, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (data->config.map[ray->map_y][ray->map_x] == '1')
+		if (ray->map_y < 0 || ray->map_y >= data->config.map_height
+			|| ray->map_x < 0 || ray->map_x >= data->config.map_width
+			|| data->config.map[ray->map_y][ray->map_x] == '1')
 			return (1);
 	}
 }

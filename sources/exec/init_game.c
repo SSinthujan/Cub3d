@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:23:33 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/15 01:01:57 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/17 19:53:52 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void	init_player(t_player *player, t_config *config)
 {
 	player->x = config->player_x + 0.5;
 	player->y = config->player_y + 0.5;
+	printf("pos: %f, %f\n", player->x, player->y);
 	if (config->player_orientation == 'N' || config->player_orientation == 'S')
 		set_player_orientation_ns(player, config);
 	else if (config->player_orientation == 'E'

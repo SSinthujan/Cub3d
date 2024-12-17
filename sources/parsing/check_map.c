@@ -6,31 +6,11 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:14:22 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/16 04:28:08 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:06:18 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	check_mapname(char *str)
-{
-	return (ft_strcmp(ft_strrchr(str, '.'), ".cub"));
-}
-/*
-	todo:
-
-	check config incorrect -> check texture a verifier
-
-	fonction recup largeur max et longueur max
-	creer un double tableau de la taille longueur max largeur max
-	fonction qui fait une copie de la map dans le double tableau et remplace les cases vide par 0 (sol)
-	fonction qui check 	-> si ferme avec des 1
-						-> si il a y a qu'un seul player
-							-> recup sa position (X, Y) et orientation (N, O, S,
-							W)
-						-> pas coupé en 2
-
-*/
 
 char	*read_map(int *fd)
 {
@@ -66,88 +46,69 @@ void	get_dimension(t_config *config)
 		j = 0;
 		while (config->map[i][j])
 		{
-			j++;
 			if (j > width)
 				width = j;
+			j++;
 		}
 		i++;
 	}
 	config->map_height = i;
-	config->map_width = width;
+	config->map_width = width + 1;
 }
 
-char	**get_copymap(int height, int width)
+int	check_format(t_config *config, char **map)
 {
-	char	**copy_map;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	copy_map = malloc(sizeof(char *) * height);
-	if (!copy_map)
-		return (NULL);
-	i = 0;
-	while (i < height)
+	i = 1;
+	while (map[i])
 	{
-		copy_map[i] = malloc(sizeof(char) * (width + 1));
-		if (!copy_map[i])
+		j = 1;
+		while (map[i][j])
 		{
-			while (--i >= 0)
-				free(copy_map[i]);
-			free(copy_map);
-			return (NULL);
+			if (map[i][j] == 'N' || map[i][j] == 'O' || map[i][j] == 'W'
+				|| map[i][j] == 'E')
+			{
+				if (config->player_orientation)
+					return (printf("Error\nMap incorrect (player)\n"), 1);
+				config->player_orientation = map[i][j];
+				config->player_x = j;
+				config->player_y = i;
+			}
+			else if (map[i][j] == '0')
+			{
+				if (map[i - 1][j] == '2' || map[i + 1][j] == '2' || map[i][j
+					- 1] == '2' || map[i][j + 1] == '2')
+					return (printf("Error\nMap incorrect (map open)\n"), 1);
+			}
+			++j;
 		}
-		j = 0;
-		while (j < width)
-			copy_map[i][j++] = '2';
 		i++;
 	}
-	//     while (height--)
-    // {
-    //     copy_map[height] = malloc(sizeof(char) * (width + 1));
-    //     if (!copy_map[height])
-    //     {
-    //         while (height >= 0)
-    //             free(copy_map[height--]);
-    //         free(copy_map);
-    //         return (NULL);
-    //     }
-    //     memset(copy_map[height], '2', width);
-    //     copy_map[height][width] = '\0';
-    // }
-	return (copy_map);
+	return (0);
 }
 
-int	verif_map(char **map, int height, int width)
+int	verif_map(t_config *config)
 {
 	char	**copy_map;
-	int		i;
-	int		j;
 
-	copy_map = get_copymap(height, width);
+	copy_map = get_copymap(config->map_height, config->map_width);
 	if (!copy_map)
 		return (printf("Error\nMemory allocation failed (copy_map)\n"), 1);
-	i = 0;
-	while (i < height)
-	{
-		j = 0;
-		while (j < width)
-		{
-			if (map[i][j] != ' ')
-				copy_map[i][j] = map[i][j];
-			else
-				copy_map[i][j] = '2';
-			j++;
-		}
-		copy_map[i][j] = '\0';
-		i++;
-	}
+	mapcopymap(config, copy_map);
 	print_map(copy_map);
-	return (free_map(copy_map), 0);
+	if (check_format(config, copy_map))
+		return (free_map(copy_map), 1);
+	config->map = copy_map;
+	return (0);
 }
 
 int	check_map(t_data *cub)
 {
 	char	*map_str;
+	int		i;
+	int		j;
 
 	map_str = read_map(&cub->config.fd);
 	if (!map_str)
@@ -157,8 +118,15 @@ int	check_map(t_data *cub)
 	if (!cub->config.map)
 		return (printf("Error\nMemory allocation failed (map)"), 1);
 	get_dimension(&cub->config);
-	if (verif_map(cub->config.map, cub->config.map_height,
-			cub->config.map_width))
-		return (free_map(cub->config.map), 1);
+	if (verif_map(&cub->config))
+		return (1);
+	i = -1;
+	while (cub->config.map[++i])
+	{
+		j = -1;
+		while (cub->config.map[i][++j])
+			if (cub->config.map[i][j] == '2')
+				cub->config.map[i][j] = '1';
+	}
 	return (0);
 }

@@ -107,7 +107,6 @@ typedef struct s_data
 }				t_data;
 
 // PARSING
-int				check_mapname(char *cub);
 int				check_config(char *map, t_data *cub);
 int				check_texture(t_config *config, char *str);
 int				check_color(t_config *config, char *str);
@@ -116,8 +115,9 @@ char			*get_word(char *str, char *dest, int size);
 int				check_rgb(int *color, char *rgb);
 int				ft_strcmp(const char *s1, const char *s2);
 int				check_map(t_data *cub);
-void	print_map(char **map);
-
+char			**get_copymap(int height, int width);
+char			**mapcopymap(t_config *config, char **copy_map);
+void			print_map(char **map);
 
 // EXEC
 int				load_textures(t_data *data);
