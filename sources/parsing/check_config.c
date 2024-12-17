@@ -82,7 +82,8 @@ int	check_config(char *map, t_data *cub)
 	elements = ft_split(elements_str, '\n');
 	free(elements_str);
 	if (!elements)
-		return (close(cub->config.fd), 1);
+		return (close(cub->config.fd),
+			printf("Error\nMemory allocation failed (elements)\n"), 1);
 	while (i < 6)
 	{
 		if (!check_texture(&cub->config, elements[i])
@@ -91,6 +92,5 @@ int	check_config(char *map, t_data *cub)
 		else
 			return (close(cub->config.fd), free_tab(elements), 1);
 	}
-	free_tab(elements);
-	return (0);
+	return (free_tab(elements), 0);
 }

@@ -2,7 +2,7 @@ NO ./textures/wall1.xpm
 
 SO ./textures/wall2.xpm
 
-WE kljlkj  ./textures/wall5.xpm
+WE ./textures/wall3.xpm
 
 EA ./textures/wall4.xpm
 
@@ -10,6 +10,6 @@ F 220,100,000
 
 C 225,30,0
 
-1111111111
-1000N00001
-1011111101
+   1111111111
+  10N00001
+   1111111111

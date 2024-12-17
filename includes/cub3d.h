@@ -116,6 +116,8 @@ char			*get_word(char *str, char *dest, int size);
 int				check_rgb(int *color, char *rgb);
 int				ft_strcmp(const char *s1, const char *s2);
 int				check_map(t_data *cub);
+void	print_map(char **map);
+
 
 // EXEC
 int				load_textures(t_data *data);
@@ -143,7 +145,7 @@ double			calculate_perp_wall_dist(t_data *data, t_ray *ray);
 void			calculate_draw_limits(t_draw *draw, int win_height);
 void			draw_column(t_data *data, int x, t_draw *draw,
 					t_texture *texture);
-void			free_map(t_config *config);
+void			free_map(char **map);
 void			initialize_delta(t_ray *ray);
 int				perform_dda(t_data *data, t_ray *ray);
 void			render_ceiling(t_data *data, int x, int draw_start);

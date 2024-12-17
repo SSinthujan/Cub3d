@@ -23,18 +23,18 @@ int	init_parse2(int ac, char **av, t_data *cub)
 	return (0);
 }
 
-static char	*lines[4] = {"11111111111111", "1N000000000001", "11111111111111",
-		NULL};
+// static char	*lines[4] = {"11111111111111", "1N000000000001", "11111111111111",
+// 		NULL};
 
-void	init_parse(t_config *config)
+void	init_parse(t_data *cub)
 {
-	config->map_width = 14;
-	config->map_height = 3;
-	config->player_x = 1;
+	cub->config.map_width = 14;
+	cub->config.map_height = 3;
+	cub->config.player_x = 1;
 		// Player's initial X position (grid-based)
-	config->player_y = 1;
+	cub->config.player_y = 1;
 		// Player's initial Y position (grid-based)
-	config->player_orientation = 'N'; // Player is facing North
+	cub->config.player_orientation = 'N'; // Player is facing North
 	// config->map = malloc(sizeof(char *) * (config->map_height + 1)); //
 		// +1 si vous voulez terminer par NULL
 	// if (!config->map)
@@ -43,7 +43,7 @@ void	init_parse(t_config *config)
 	//     exit(EXIT_FAILURE);
 	// }
 	// Affectation des lignes de la carte (normalement faites pendant le parsing)
-	config->map = lines;
+	// cub->config.map = check_map(cub);
 	// print_config(config);
 }
 
@@ -53,7 +53,7 @@ void	init_parse(t_config *config)
 
 // 	if (init_parse2(ac, av, &cub))
 // 		return (1);
-// 	init_parse(&cub.config); // finir le parsing et retirer
+// 	init_parse(&cub); // finir le parsing et retirer
 // 	if (init_game(&cub))
 //         return (1);
 // 	handle_keyhook(&cub);
@@ -61,6 +61,39 @@ void	init_parse(t_config *config)
 // 	mlx_loop(cub.mlx_ptr);
 // 	return (0);
 // }
+
+void	print_map(char **map)
+{
+	int i = 0;
+	int j;
+
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			printf("%c", map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
+
+int	main(int ac, char **av)
+{
+	static t_data cub = {0};
+	if (init_parse2(ac, av, &cub))
+		return (1);
+	check_map(&cub);
+	print_map(cub.config.map);
+	free_map(cub.config.map);
+	return (0);
+}
+
+// UTILS
+
+/*
 
 void print_config(t_data *cub)
 {
@@ -89,17 +122,5 @@ void print_config(t_data *cub)
 	printf("east :%s\n", cub->config.east_texture);
 	printf("west :%s\n", cub->config.west_texture);
 }
-int	main(int ac, char **av)
-{
-	static t_data cub = {0};
-	if (init_parse2(ac, av, &cub))
-		return (1);
-	check_map(&cub);
-	print_config(&cub);
-	return (0);
-}
 
-// UTILS
-
-/*
 */
