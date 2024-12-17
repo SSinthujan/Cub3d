@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:23:30 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/14 19:08:59 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/17 22:50:56 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int game_loop(t_data *data)
 	return (0);
 }
 
-int	close_window(t_data *data)
+int	close_window(t_data *data, int nb)
 {
 	int i;
 
@@ -49,8 +49,9 @@ int	close_window(t_data *data)
 		mlx_loop_end(data->mlx_ptr);
 		free(data->mlx_ptr);
 	}
-	// free_map(&data->config);
-	// free(data->config);
+	free_map(data->config.map);
+	if (nb == 1)
+		printf("Error\nFailed to load textures\n");
 	exit(0);
 	return (0);
 }
@@ -65,7 +66,7 @@ void	handle_keyhook(t_data *data)
 int	key_pressed(int keycode, t_data *data)
 {
 	if (keycode == 65307)
-		close_window(data);
+		close_window(data, 0);
 	if (keycode == 119)
 		data->movement.move_forward = 1;
 	if (keycode == 115)

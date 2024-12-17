@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:23:33 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/17 19:53:52 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/17 22:52:05 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,14 @@ int	load_textures2(t_data *data)
 			data->config.west_texture, &data->wall[2].width,
 			&data->wall[2].height);
 	if (!data->wall[2].img)
-	{
-		close_window(data);
-		printf("Error\nFailed to load textures\n");
-		return (1);
-	}
+		return (close_window(data, 1), 1);
 	data->wall[2].data = (int *)mlx_get_data_addr(data->wall[2].img, &bpp,
 			&size_line, &endian);
 	data->wall[3].img = mlx_xpm_file_to_image(data->mlx_ptr,
 			data->config.east_texture, &data->wall[3].width,
 			&data->wall[3].height);
 	if (!data->wall[3].img)
-	{
-		close_window(data);
-		return (printf("Error\nFailed to load textures\n"), 1);
-	}
+		return (close_window(data, 1), 1);
 	data->wall[3].data = (int *)mlx_get_data_addr(data->wall[3].img, &bpp,
 			&size_line, &endian);
 	return (0);
@@ -47,25 +40,21 @@ int	load_textures(t_data *data)
 	int	bpp;
 	int	size_line;
 	int	endian;
+	int i;
 
+	i = 1;
 	data->wall[0].img = mlx_xpm_file_to_image(data->mlx_ptr,
 			data->config.north_texture, &data->wall[0].width,
 			&data->wall[0].height);
 	if (!data->wall[0].img)
-	{
-		close_window(data);
-		return (printf("Error\nFailed to load textures\n"), 1);
-	}
+		return (close_window(data, 1), 1);
 	data->wall[0].data = (int *)mlx_get_data_addr(data->wall[0].img, &bpp,
 			&size_line, &endian);
 	data->wall[1].img = mlx_xpm_file_to_image(data->mlx_ptr,
 			data->config.south_texture, &data->wall[1].width,
 			&data->wall[1].height);
 	if (!data->wall[1].img)
-	{
-		close_window(data);
-		return (printf("Error\nFailed to load textures\n"), 1);
-	}
+		return (close_window(data, 1), 1);
 	data->wall[1].data = (int *)mlx_get_data_addr(data->wall[1].img, &bpp,
 			&size_line, &endian);
 	return (load_textures2(data));
@@ -86,12 +75,13 @@ int	init_game(t_data *data)
 		return (1);
 	}
 	if (load_textures(data))
-    {
-        mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	{
+		// printf("je suis la \n");
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		mlx_destroy_display(data->mlx_ptr);
-	   	free(data->mlx_ptr);
+		free(data->mlx_ptr);
 		return (1);
-    }
+	}
 	init_player(&data->player, &data->config);
 	return (0);
 }
@@ -136,7 +126,6 @@ void	init_player(t_player *player, t_config *config)
 {
 	player->x = config->player_x + 0.5;
 	player->y = config->player_y + 0.5;
-	printf("pos: %f, %f\n", player->x, player->y);
 	if (config->player_orientation == 'N' || config->player_orientation == 'S')
 		set_player_orientation_ns(player, config);
 	else if (config->player_orientation == 'E'

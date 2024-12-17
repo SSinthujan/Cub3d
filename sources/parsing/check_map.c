@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 14:14:22 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/17 20:06:18 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/17 22:32:16 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ int	verif_map(t_config *config)
 	if (!copy_map)
 		return (printf("Error\nMemory allocation failed (copy_map)\n"), 1);
 	mapcopymap(config, copy_map);
-	print_map(copy_map);
 	if (check_format(config, copy_map))
 		return (free_map(copy_map), 1);
 	config->map = copy_map;

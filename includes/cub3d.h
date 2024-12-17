@@ -124,7 +124,7 @@ int				load_textures(t_data *data);
 int				init_game(t_data *data);
 void			init_player(t_player *player, t_config *config);
 int				game_loop(t_data *data);
-int				close_window(t_data *data);
+int				close_window(t_data *data, int nb);
 void			handle_keyhook(t_data *data);
 int				key_pressed(int keycode, t_data *data);
 int				key_released(int keycode, t_data *data);

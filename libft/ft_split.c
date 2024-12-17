@@ -6,107 +6,104 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 06:32:59 by alyildiz          #+#    #+#             */
-/*   Updated: 2024/12/17 20:09:21 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/17 22:21:18 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_is_charset(char c, char charset)
+static int	is_in_c(char car, char c)
 {
-	if (charset == c)
+	if (car == c)
 		return (1);
 	return (0);
 }
 
-int	ft_is_word(char *str, char charset)
+static int	count_word(char *str, char c)
 {
 	int	i;
-	int	word;
+	int	count;
 
 	i = 0;
-	word = 0;
-	if (!str || !str[i])
+	count = 0;
+	if (!str)
 		return (0);
 	while (str[i])
 	{
-		while (str[i] && ft_is_charset(str[i], charset))
+		if (str[i] && is_in_c(str[i], c))
 			i++;
-		if (str[i] && !ft_is_charset(str[i], charset))
+		if (str[i] && !is_in_c(str[i], c))
 		{
-			while (!ft_is_charset(str[i], charset) && str[i])
+			count++;
+			while (str[i] && !is_in_c(str[i], c))
 				i++;
-			word++;
 		}
 	}
+	return (count);
+}
+
+static char	*ft_word(char *str, char c)
+{
+	int		i;
+	char	*word;
+
+	word = 0;
+	i = 0;
+	while (str[i] && !is_in_c(str[i], c))
+		i++;
+	word = (char *)malloc(sizeof(char) * (i + 1));
+	if (!word)
+		return (NULL);
+	i = 0;
+	while (str[i] && !is_in_c(str[i], c))
+	{
+		word[i] = str[i];
+		i++;
+	}
+	word[i] = '\0';
 	return (word);
 }
 
-char	**ft_malloc_word(char *str, char charset, char **dest, int word)
+static char	**ft_free(char **tab, int i)
 {
-	int	i;
-	int	j;
-	int	letter;
-
-	i = 0;
-	j = 0;
-	while (str[i])
+	while (i)
 	{
-		letter = 0;
-		while (str[i] && ft_is_charset(str[i], charset))
-			i++;
-		while (str[i] && !ft_is_charset(str[i], charset))
-		{
-			letter++;
-			i++;
-		}
-		if (j < word)
-			dest[j++] = malloc((sizeof(char) * letter) + 1);
+		free(tab[i]);
+		tab[i] = 0;
+		i--;
 	}
-	return (dest);
+	free(tab);
+	tab = 0;
+	return (tab);
 }
 
-char	**ft_put_word(char *str, char charset, char **dest)
+char	**ft_split(char const *s, char c)
 {
-	int	i;
-	int	j;
-	int	k;
+	char	**tab;
+	int		i;
 
+	tab = 0;
+	if (!s)
+		return (NULL);
+	tab = (char **)malloc(sizeof(char *) * (count_word((char *)s, c) + 1));
+	if (!tab)
+		return (NULL);
 	i = 0;
-	k = 0;
-	while (str[i])
+	while (*s)
 	{
-		j = 0;
-		while (str[i] && ft_is_charset(str[i], charset))
-			i++;
-		if (str[i] && !ft_is_charset(str[i], charset))
+		if (*s && is_in_c(*s, c))
+			s++;
+		if (*s && !is_in_c(*s, c))
 		{
-			while (str[i] && !ft_is_charset(str[i], charset))
-				dest[k][j++] = str[i++];
-			dest[k][j] = '\0';
-			k++;
+			tab[i] = ft_word((char *)s, c);
+			if (tab[i++] == 0)
+				return (ft_free((char **)tab, i++));
+			while (*s && !is_in_c(*s, c))
+				s++;
 		}
 	}
-	return (dest);
-}
-
-char	**ft_split(const char *str, char charset)
-{
-	char	**dest;
-	int		word;
-	char	*cast_str;
-
-	cast_str = (char *)str;
-	word = ft_is_word(cast_str, charset);
-	dest = malloc(sizeof(char *) * (word + 1));
-	if (!dest)
-		return (0);
-	dest = ft_malloc_word(cast_str, charset, dest, word);
-	if (!dest)
-		return (0);
-	dest = ft_put_word(cast_str, charset, dest);
-	dest[word] = NULL;
-	return (dest);
+	tab[i] = (0);
+	return (tab);
 }
 /*
 int main()
