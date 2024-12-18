@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:23:10 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/15 01:04:23 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:43:40 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 int	rgb_to_hex(int r, int g, int b)
 {
-	return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
+	return (((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF));
 }
 
 void	render_ceiling(t_data *data, int x, int draw_start)
 {
 	int	y;
-	int color;
+	int	color;
 
-	color = rgb_to_hex(data->config.ceiling_color[0], data->config.ceiling_color[1], data->config.ceiling_color[2]);
+	color = rgb_to_hex(data->config.ceiling_color[0],
+			data->config.ceiling_color[1], data->config.ceiling_color[2]);
 	y = 0;
 	while (y < draw_start)
 	{
@@ -34,10 +35,11 @@ void	render_ceiling(t_data *data, int x, int draw_start)
 void	render_floor(t_data *data, int x, int draw_end)
 {
 	int	y;
-	int color;
+	int	color;
 
 	y = draw_end + 1;
-	color = rgb_to_hex(data->config.floor_color[0], data->config.floor_color[1], data->config.floor_color[2]);
+	color = rgb_to_hex(data->config.floor_color[0], data->config.floor_color[1],
+			data->config.floor_color[2]);
 	while (y < WIN_HEIGHT)
 	{
 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, color);

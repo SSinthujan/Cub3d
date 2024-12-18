@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 14:20:15 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/16 04:21:12 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:10:58 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*read_config(char *map, int *fd)
 			str = ft_strjoin2(str, line, ft_strlen(line));
 			if (!str)
 				return (free(line), printf("Error\nMemory allocation failed\n"),
-					NULL);
+					close(*fd), NULL);
 			i++;
 		}
 		free(line);
@@ -75,10 +75,7 @@ int	check_config(char *map, t_data *cub)
 	i = 0;
 	elements_str = read_config(map, &cub->config.fd);
 	if (!elements_str)
-	{
-		if (cub->config.fd >= 0)
-			return (close(cub->config.fd), 1);
-	}
+		return (1);
 	elements = ft_split(elements_str, '\n');
 	free(elements_str);
 	if (!elements)

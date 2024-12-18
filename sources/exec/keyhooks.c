@@ -6,13 +6,13 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:23:30 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/17 22:50:56 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:43:52 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int game_loop(t_data *data)
+int	game_loop(t_data *data)
 {
 	if (data->movement.move_forward)
 		move_forward(data);
@@ -32,12 +32,12 @@ int game_loop(t_data *data)
 
 int	close_window(t_data *data, int nb)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (data->mlx_ptr)
 	{
-		while (i < 4)		
+		while (i < 4)
 		{
 			if (data->wall[i].img)
 				mlx_destroy_image(data->mlx_ptr, data->wall[i].img);

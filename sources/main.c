@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:22:57 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/17 23:52:46 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/18 03:21:16 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ int	init_parse(int ac, char **av, t_data *cub)
 	return (0);
 }
 
+int	main(int ac, char **av)
+{
+	static t_data	cub = {0};
+
+	if (init_parse(ac, av, &cub))
+		return (1);
+	if (init_game(&cub))
+		return (1);
+	handle_keyhook(&cub);
+	mlx_loop_hook(cub.mlx_ptr, game_loop, &cub);
+	mlx_loop(cub.mlx_ptr);
+	return (0);
+}
+
 void	print_map(char **map)
 {
 	int	i;
@@ -47,19 +61,4 @@ void	print_map(char **map)
 		printf("\n");
 		i++;
 	}
-}
-
-int	main(int ac, char **av)
-{
-	static t_data	cub = {0};
-
-	if (init_parse(ac, av, &cub))
-		return (1);
-	print_map(cub.config.map);
-	if (init_game(&cub))
-		return (1);
-	handle_keyhook(&cub);
-	mlx_loop_hook(cub.mlx_ptr, game_loop, &cub);
-	mlx_loop(cub.mlx_ptr);
-	return (0);
 }

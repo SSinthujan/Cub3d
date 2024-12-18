@@ -6,7 +6,7 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:29:05 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/12/17 20:01:23 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:33:26 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,28 @@ char	**mapcopymap(t_config *config, char **copy_map)
 		{
 			if (!cant_read && !config->map[i][j])
 				cant_read = true;
-			if (!cant_read && config->map[i][j] != ' ' && config->map[i][j] != '\t' && config->map[i][j] != '\v' && config->map[i][j] != '	')
+			if (!cant_read && config->map[i][j] != ' ')
 				copy_map[k][j] = config->map[i][j];
-			else if (cant_read || (config->map[i][j] == ' ' || config->map[i][j] == '\t' || config->map[i][j] == '\v' || config->map[i][j] == '	'))
+			else if (cant_read || config->map[i][j] == ' ')
 				copy_map[k][j] = '2';
 			++j;
 		}
 		++k;
 		++i;
 	}
-	return (free_map(config->map),copy_map);
+	return (free_map(config->map), copy_map);
+}
+
+int	is_player(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (0);
+	return (1);
+}
+
+void	get_playerpos(t_config *config, int i, int j, char c)
+{
+	config->player_orientation = c;
+	config->player_x = j;
+	config->player_y = i;
 }

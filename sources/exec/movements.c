@@ -6,66 +6,79 @@
 /*   By: ssitchsa <ssitchsa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 18:23:19 by ssitchsa          #+#    #+#             */
-/*   Updated: 2024/11/30 18:23:29 by ssitchsa         ###   ########.fr       */
+/*   Updated: 2024/12/18 02:47:15 by ssitchsa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-// je verifie si ou jvais c un mur ou pas et 
-// jajoute ou je soustrait la direciton multiplier par la vitesse aux cordonnées x et y du joueur
-// data->player.dirX * moveSpeed
-void move_forward(t_data *data)
+void	move_forward(t_data *data)
 {
-    double moveSpeed = 0.1;
+	double	movespeed;
 
-    if (data->config.map[(int)(data->player.y)][(int)(data->player.x + data->player.dirX * moveSpeed)] != '1')
-        data->player.x += data->player.dirX * moveSpeed;
-    if (data->config.map[(int)(data->player.y + data->player.dirY * moveSpeed)][(int)(data->player.x)] != '1')
-        data->player.y += data->player.dirY * moveSpeed;
+	movespeed = 0.1;
+	if (data->config.map[(int)(data->player.y)][(int)(data->player.x
+			+ data->player.dirX * movespeed)] != '1')
+		data->player.x += data->player.dirX * movespeed;
+	if (data->config.map[(int)(data->player.y + data->player.dirY
+			* movespeed)][(int)(data->player.x)] != '1')
+		data->player.y += data->player.dirY * movespeed;
 }
 
-void move_backward(t_data *data)
+void	move_backward(t_data *data)
 {
-    double moveSpeed = 0.1; 
+	double	movespeed;
 
-    if (data->config.map[(int)(data->player.y)][(int)(data->player.x - data->player.dirX * moveSpeed)] != '1')
-        data->player.x -= data->player.dirX * moveSpeed;
-    if (data->config.map[(int)(data->player.y - data->player.dirY * moveSpeed)][(int)(data->player.x)] != '1')
-        data->player.y -= data->player.dirY * moveSpeed;
+	movespeed = 0.1;
+	if (data->config.map[(int)(data->player.y)][(int)(data->player.x
+			- data->player.dirX * movespeed)] != '1')
+		data->player.x -= data->player.dirX * movespeed;
+	if (data->config.map[(int)(data->player.y - data->player.dirY
+			* movespeed)][(int)(data->player.x)] != '1')
+		data->player.y -= data->player.dirY * movespeed;
 }
 
-void move_left(t_data *data)
+void	move_left(t_data *data)
 {
-    double moveSpeed = 0.1;
+	double	movespeed;
 
-    if (data->config.map[(int)(data->player.y)][(int)(data->player.x - data->player.planeX * moveSpeed)] != '1')
-        data->player.x -= data->player.planeX * moveSpeed;
-    if (data->config.map[(int)(data->player.y - data->player.planeY * moveSpeed)][(int)(data->player.x)] != '1')
-        data->player.y -= data->player.planeY * moveSpeed;
+	movespeed = 0.1;
+	if (data->config.map[(int)(data->player.y)][(int)(data->player.x
+			- data->player.planeX * movespeed)] != '1')
+		data->player.x -= data->player.planeX * movespeed;
+	if (data->config.map[(int)(data->player.y - data->player.planeY
+			* movespeed)][(int)(data->player.x)] != '1')
+		data->player.y -= data->player.planeY * movespeed;
 }
 
-void move_right(t_data *data)
+void	move_right(t_data *data)
 {
-    double moveSpeed = 0.1; 
+	double	movespeed;
 
-    if (data->config.map[(int)(data->player.y)][(int)(data->player.x + data->player.planeX * moveSpeed)] != '1')
-        data->player.x += data->player.planeX * moveSpeed;
-    if (data->config.map[(int)(data->player.y + data->player.planeY * moveSpeed)][(int)(data->player.x)] != '1')
-        data->player.y += data->player.planeY * moveSpeed;
+	movespeed = 0.1;
+	if (data->config.map[(int)(data->player.y)][(int)(data->player.x
+			+ data->player.planeX * movespeed)] != '1')
+		data->player.x += data->player.planeX * movespeed;
+	if (data->config.map[(int)(data->player.y + data->player.planeY
+			* movespeed)][(int)(data->player.x)] != '1')
+		data->player.y += data->player.planeY * movespeed;
 }
 
-void rotate_left(t_data *data)
+void	rotate_left(t_data *data)
 {
-    double rotSpeed = 0.05;
-    double oldDirX = data->player.dirX;
-    // rotation de la direction du joueur vers la gauche
-    data->player.dirX = data->player.dirX * cos(rotSpeed) - data->player.dirY * sin(rotSpeed);
-    data->player.dirY = oldDirX * sin(rotSpeed) + data->player.dirY * cos(rotSpeed);
+	double	rotspeed;
+	double	olddirx;
+	double	oldplanex;
 
-    double oldPlaneX = data->player.planeX;
-    // rotation du plan de camera vers al gauche aussi
-    data->player.planeX = data->player.planeX * cos(rotSpeed) - data->player.planeY * sin(rotSpeed);
-    data->player.planeY = oldPlaneX * sin(rotSpeed) + data->player.planeY * cos(rotSpeed);
+	rotspeed = 0.05;
+	olddirx = data->player.dirX;
+	data->player.dirX = data->player.dirX * cos(rotspeed) - data->player.dirY
+		* sin(rotspeed);
+	data->player.dirY = olddirx * sin(rotspeed) + data->player.dirY
+		* cos(rotspeed);
+	oldplanex = data->player.planeX;
+	data->player.planeX = data->player.planeX * cos(rotspeed)
+		- data->player.planeY * sin(rotspeed);
+	data->player.planeY = oldplanex * sin(rotspeed) + data->player.planeY
+		* cos(rotspeed);
 }

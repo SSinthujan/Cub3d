@@ -118,9 +118,12 @@ int				check_map(t_data *cub);
 char			**get_copymap(int height, int width);
 char			**mapcopymap(t_config *config, char **copy_map);
 void			print_map(char **map);
+int				is_player(char c);
+void			get_playerpos(t_config *config, int i, int j, char c);
 
 // EXEC
 int				load_textures(t_data *data);
+int				load_textures2(t_data *data);
 int				init_game(t_data *data);
 void			init_player(t_player *player, t_config *config);
 int				game_loop(t_data *data);
